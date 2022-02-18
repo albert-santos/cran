@@ -8,7 +8,7 @@ clearvars
 for k=1:1
     
     if k==1
-        U=30;
+        U=360;
     end
     if k==2
         U=50;
@@ -19,7 +19,7 @@ for k=1:1
     
   fprintf('Implementando cenário com #%d usuários\n ', U)
 
-Sim = 2;    % Total de Execuções
+Sim = 1;    % Total de Execuções
 %U = 500;     % Total de Usuários
 S = 4;      % Total de Small
 M = 1;       % Total de Macro

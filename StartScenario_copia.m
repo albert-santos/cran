@@ -6,8 +6,8 @@
 % M Total de MacroCells
 
 % Eixos dos cenários.  (Área total = 4 Km²)
-X(1,:) = [0 800]; % Eixo X minimo e máximo.
-Y(1,:) = [0 800]; % Eixo Y minimo e máximo.
+X(1,:) = [0 600]; % Eixo X minimo e máximo.
+Y(1,:) = [0 600]; % Eixo Y minimo e máximo.
 
 
 % Confirmar os parâmetros usados % ----------------------------------------
