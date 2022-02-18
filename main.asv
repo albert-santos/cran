@@ -38,7 +38,7 @@ end
 
 writematrix(UserPosition,'UserPosition.xls', 'WriteMode', 'overwritesheet');
 writematrix(EnbsPosition,'SmallPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida(:,:,Sim),'SaidaSA.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida,'SaidaSA.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -95,7 +95,7 @@ end
 
 writematrix(UserPosition_FU,'UserPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
 writematrix(EnbsPosition_FU,'SmallPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida_FU(:,:,Sim),'Saida_HSDSO.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida_FU,'Saida_HSDSO.xls', 'WriteMode', 'overwritesheet');
 
 T1 = size(saida_FU, 1);
 T2 = size(saida_FU, 2);
