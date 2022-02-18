@@ -80,12 +80,16 @@ end
 
 
 
+
+
+
 %tic
 for i = 1:Sim
     i
-[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i)] = root_FU(U,S,M);
+[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i), UE(:,:,i)] = root_FU(U,S,M);
 fprintf('Fim da Iteração #%d\n', i);
 end
+
 
 T1 = size(saida_FU, 1);
 T2 = size(saida_FU, 2);

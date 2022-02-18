@@ -1,4 +1,4 @@
-function [saida, tempo_execucao, Micros_HDSO] = root_FU(Usuarios, SmallCells, MacroCells)
+function [saida, tempo_execucao, Micros_HDSO, U] = root_FU(Usuarios, SmallCells, MacroCells)
 
 % -------------------------------------------------------------------------
 % Parte III --> Criação do Cenário para etapa de otimização
