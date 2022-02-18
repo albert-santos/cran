@@ -5,7 +5,7 @@ clearvars
 % 02 -- 1000
 % 03 -- 1500
 
-for k=1:3
+for k=1:1
     
     if k==1
         U=30;
@@ -26,56 +26,56 @@ M = 1;       % Total de Macro
 
 %tic
 
-for i = 1:Sim
-    i
-[saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(:,:,i)] = root(U,S,M);
-fprintf('Fim da Iteração #%d\n', i);
-end
-%Micros(horas:total de micros: nº de iterações do código)
+% for i = 1:Sim
+%     i
+% [saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(:,:,i)] = root(U,S,M);
+% fprintf('Fim da Iteração #%d\n', i);
+% end
+% %Micros(horas:total de micros: nº de iterações do código)
+% 
+% [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
+% [EnbsPosition] = Smalls_position(Micros); % Posição das SmallCells selecionadas para cada hora
+% 
+% writematrix(UserPosition,'UserPosition.xls', 'WriteMode', 'overwritesheet');
+% writematrix(EnbsPosition,'SmallPosition.xls', 'WriteMode', 'overwritesheet');
+% writematrix(saida,'SaidaSA.xls', 'WriteMode', 'overwritesheet');
 
-[UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
-[EnbsPosition] = Smalls_position(Micros); % Posição das SmallCells selecionadas para cada hora
-
-writematrix(UserPosition,'UserPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition,'SmallPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida,'SaidaSA.xls', 'WriteMode', 'overwritesheet');
-
- 
-T1 = size(saida, 1);
-T2 = size(saida, 2);
-saida1 = zeros(T1,T2);
-
-for i = 1:Sim
-    for j=1 : T1
-        for h=1 : T2
-           saida1(j, h) = saida1 (j, h) + saida(j, h, i);
-        end
-    end
-    
-end
-
-T1 = size(Micros, 1); %24 linhas que representam as 24h
-T2 = size(Micros, 2);% colunas que representam o número total de micros na rede
-usr_por_micro = zeros(T1,T2);
-
-for i = 1:Sim %nº de iterações do código
-    for j=1 : T1 %1→24
-        for h=1 : T2 %1→total de micros
-           usr_por_micro(j, h) = usr_por_micro(j, h) + Micros(j, h, i).U;
-        end
-    end
-    
-end
-usr_por_micro(:,:) = round(usr_por_micro/Sim); 
-
-saida_SA(:,:,k) = round(saida1/Sim);
-%z = toc;
-
-for i=1:24
-    for j=1:size(Micros, 2)
-        Usuarios_por_Micro_SA(i, j, k) = usr_por_micro(i,j);
-    end
-end
+%  
+% T1 = size(saida, 1);
+% T2 = size(saida, 2);
+% saida1 = zeros(T1,T2);
+% 
+% for i = 1:Sim
+%     for j=1 : T1
+%         for h=1 : T2
+%            saida1(j, h) = saida1 (j, h) + saida(j, h, i);
+%         end
+%     end
+%     
+% end
+% 
+% T1 = size(Micros, 1); %24 linhas que representam as 24h
+% T2 = size(Micros, 2);% colunas que representam o número total de micros na rede
+% usr_por_micro = zeros(T1,T2);
+% 
+% for i = 1:Sim %nº de iterações do código
+%     for j=1 : T1 %1→24
+%         for h=1 : T2 %1→total de micros
+%            usr_por_micro(j, h) = usr_por_micro(j, h) + Micros(j, h, i).U;
+%         end
+%     end
+%     
+% end
+% usr_por_micro(:,:) = round(usr_por_micro/Sim); 
+% 
+% saida_SA(:,:,k) = round(saida1/Sim);
+% %z = toc;
+% 
+% for i=1:24
+%     for j=1:size(Micros, 2)
+%         Usuarios_por_Micro_SA(i, j, k) = usr_por_micro(i,j);
+%     end
+% end
 
 
 
@@ -86,10 +86,16 @@ end
 %tic
 for i = 1:Sim
     i
-[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i), UE(:,:,i)] = root_FU(U,S,M);
+[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i), UE_FU(:,:,i)] = root_FU(U,S,M);
 fprintf('Fim da Iteração #%d\n', i);
 end
 
+[UserPosition_FU] = Users_position(UE_FU, Sim); % Posicao dos usuários para cada hora
+[EnbsPosition_FU] = Smalls_position(Micros_HDSO); % Posição das SmallCells selecionadas para cada hora
+
+writematrix(UserPosition_FU,'UserPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition_FU,'SmallPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida_FU,'Saida_HSDSO.xls', 'WriteMode', 'overwritesheet');
 
 T1 = size(saida_FU, 1);
 T2 = size(saida_FU, 2);
@@ -109,8 +115,8 @@ end
 saida_HDSO(:,:,k) = round(saida2/Sim);
 
 
-T1 = size(Micros, 1);
-T2 = size(Micros, 2);
+T1 = size(Micros_HDSO, 1);
+T2 = size(Micros_HDSO, 2);
 usr_por_micro_HDSO = zeros(T1,T2);
 
 for i = 1:Sim
@@ -132,29 +138,29 @@ end
 
 %w=toc;
 
-for i=1:24
-    Prob_bloqueio_SA(i,k) = sum(saida_SA(i,2,k),1)./sum((saida_SA(i,1,k)+saida_SA(i,2,k)),1);   
-    Prob_bloqueio_FU(i,k) = sum(saida_HDSO(i,2,k),1)./sum((saida_HDSO(i,1,k)+saida_HDSO(i,2,k)),1);
-end
+% for i=1:24
+%     Prob_bloqueio_SA(i,k) = sum(saida_SA(i,2,k),1)./sum((saida_SA(i,1,k)+saida_SA(i,2,k)),1);   
+%     Prob_bloqueio_FU(i,k) = sum(saida_HDSO(i,2,k),1)./sum((saida_HDSO(i,1,k)+saida_HDSO(i,2,k)),1);
+% end
 
 % save('Prob_bloqueio_SA.mat', 'Prob_bloqueio_SA');
 % save('Prob_bloqueio_FU.mat', 'Prob_bloqueio_FU');
 
-temp = size(tempo_execucao_1, 1);
-tempo_execucao_SA = zeros(temp,1);
-tempo_execucao_FU = zeros(temp,1);
-for i=1:24
-    for j=1:Sim
-        tempo_execucao_FU(i) = tempo_execucao_FU(i)+ tempo_execucao_2(i, j);
-        tempo_execucao_SA(i) = tempo_execucao_SA(i)+ tempo_execucao_1(i, j);
-    end
-end
-
-tempo_execucao_SA = tempo_execucao_SA ./Sim;
-tempo_execucao_FU = tempo_execucao_FU./Sim;
-
-t_execucao_SA(:,k) = tempo_execucao_SA ./60;
-t_execucao_HDSO(:,k) = tempo_execucao_FU./60;  
+% temp = size(tempo_execucao_1, 1);
+% tempo_execucao_SA = zeros(temp,1);
+% tempo_execucao_FU = zeros(temp,1);
+% for i=1:24
+%     for j=1:Sim
+%         tempo_execucao_FU(i) = tempo_execucao_FU(i)+ tempo_execucao_2(i, j);
+%         tempo_execucao_SA(i) = tempo_execucao_SA(i)+ tempo_execucao_1(i, j);
+%     end
+% end
+% 
+% tempo_execucao_SA = tempo_execucao_SA ./Sim;
+% tempo_execucao_FU = tempo_execucao_FU./Sim;
+% 
+% t_execucao_SA(:,k) = tempo_execucao_SA ./60;
+% t_execucao_HDSO(:,k) = tempo_execucao_FU./60;  
 
 
 end
