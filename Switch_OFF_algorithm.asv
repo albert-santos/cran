@@ -16,7 +16,7 @@ function [ON, OFF] = Switch_OFF_algorithm(Macro2, S2,Us2, V21) %HSI)
 
         countM = 0; % Nº de usuários transferidos para a Macro
         count = 0; % Nº de usuários transferidos para as Smalls
-        S2(Ind).D = 0; % Desligando a Small
+        S2(Ind).D = 0; % Ligando a Small
         S2(Ind).VU = [];
         S2(Ind).U = 0;
         S2(Ind).PRB_F = S2(Ind).PRB;
