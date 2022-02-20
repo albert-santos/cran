@@ -2,8 +2,8 @@ function [MC] = StartMacro_copia(M)
 
 
 
-Px = [300];
-Py = [300];
+Px = [250];
+Py = [250];
 
 Cont = 1;
 for i = 1:M
