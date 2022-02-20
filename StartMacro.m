@@ -1,4 +1,4 @@
-function [MC] = StartMacro_copia(M)
+function [MC] = StartMacro(M)
 
 
 
@@ -9,7 +9,7 @@ Cont = 1;
 for i = 1:M
     for j = 1:M
         
-        MC(Cont) = StationBase_copia;
+        MC(Cont) = StationBase;
         MC(Cont).ID = Cont;
         MC(Cont).X = Px(i);
         MC(Cont).Y = Py(j);

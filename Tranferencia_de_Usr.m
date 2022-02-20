@@ -9,7 +9,7 @@ function [ usr_nao_transferido, usr_transferidos, Small, Us] = Tranferencia_de_U
     
     for i = 1:1
         for j = 1:S
-                   [DR(i,j), CQI(i,j), SINR(i,j), I(i,j)] = CalculateChannel_copia(Us(Id_usr), Small(j), Small);  
+                   [DR(i,j), CQI(i,j), SINR(i,j), I(i,j)] = CalculateChannel(Us(Id_usr), Small(j), Small);  
         end
     end   % Calcula o SINR, CQI e DR (1 PRB) de cada usuário para cada Small
     

@@ -1,4 +1,4 @@
-function [V21] = Funcao_Util_I(Small, V21)
+function [V21] = Funcao_Util_HDSO(Small, V21)
     T = length(Small);
     TS = length(V21);
     

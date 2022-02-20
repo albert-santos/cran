@@ -1,4 +1,4 @@
-function [Saida, S1] = SelecionaB_copia (SS, User, melhor_selecao, Macro,Small)
+function [Saida, S1] = SelecionaB (SS, User, melhor_selecao, Macro,Small)
 
 TS = size(Small,2);
 
@@ -20,14 +20,14 @@ end
 
 
 [Us1, S1] = ConexaoUs_alt(User, Small);
-[M1] = Media_copia(Us1);
+[M1] = Media(Us1);
 
 
-[Us1, M1] = ConexaoUsM_copia(Us1, Macro);
+[Us1, M1] = ConexaoUsM(Us1, Macro);
 
 
 
-[Saida] = CalculoResults_copia(Us1, S1);
+[Saida] = CalculoResults(Us1, S1);
 
 
 

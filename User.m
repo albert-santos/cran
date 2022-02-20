@@ -1,4 +1,4 @@
-classdef User_copia
+classdef User
     
     properties
         ID; % Identidade

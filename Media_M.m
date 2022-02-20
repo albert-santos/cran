@@ -1,4 +1,4 @@
-function [V2] = Media_M_copia (S, U)
+function [V2] = Media_M (S, U)
 
 TS = length(S);
 TU = length(U);

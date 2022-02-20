@@ -1,4 +1,4 @@
-function [Us, TU] = StartUser_copia(U, X, Y)
+function [Us, TU] = StartUser(U, X, Y)
 
 
 
@@ -17,7 +17,7 @@ for j = 1:24
     UN = U * D(j); % NY
     TU(j) = UN;
     for i = 1:UN % Criação de usuários.
-        Us(a) = User_copia;
+        Us(a) = User;
         Us(a).X = rand(1) * X(1,2);
         Us(a).Y = rand(1) * Y(1,2);
         Us(a).R_DR = T;

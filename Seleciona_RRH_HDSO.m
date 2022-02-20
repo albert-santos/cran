@@ -1,4 +1,4 @@
-function [Saida, S1] = Seleciona_RRH (User, melhor_selecao, Macro,Small)
+function [Saida, S1] = Seleciona_RRH_HDSO (User, melhor_selecao, Macro,Small)
 
 TS = size(Small,2);
 
@@ -18,15 +18,15 @@ end
   %Desligando as Small que pertencem ao conjunto OFF (melhor_seleção)
 
 
-[Us1, S1] = ConexaoUs_copia(User, Small);
-[M1] = Media_copia(Us1);
+[Us1, S1] = ConexaoUs(User, Small);
+[M1] = Media(Us1);
 
 
-[Us1, M1] = ConexaoUsM_copia(Us1, Macro);
+[Us1, M1] = ConexaoUsM(Us1, Macro);
 
 
 
-[Saida] = CalculoResults_copia(Us1, S1);
+[Saida] = CalculoResults(Us1, S1);
 
 
 

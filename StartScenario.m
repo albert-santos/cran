@@ -1,4 +1,4 @@
- function [Us, Small, Macro, TU] = StartScenario_copia(U, SC, MC)
+ function [Us, Small, Macro, TU] = StartScenario(U, SC, MC)
 
 
 % U ** Total de Usuarios = U*11 **
@@ -13,11 +13,11 @@ Y(1,:) = [0 500]; % Eixo Y minimo e máximo.
 % Confirmar os parâmetros usados % ----------------------------------------
 % -------------------------------------------------------------------------
 
-[Us, TU] = StartUser_copia(U, X, Y); % Função para iniciar os usuários
+[Us, TU] = StartUser(U, X, Y); % Função para iniciar os usuários
 
-[Small] = StartSmall_copia(SC, X, Y); % Função para iniciar as SmallCells 
+[Small] = StartSmall(SC, X, Y); % Função para iniciar as SmallCells 
 
-[Macro] = StartMacro_copia(MC); % Função para iniciar as MacriCells
+[Macro] = StartMacro(MC); % Função para iniciar as MacriCells
 
 
  

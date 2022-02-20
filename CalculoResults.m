@@ -1,4 +1,4 @@
-function [Saida] = CalculoResults_copia(Us1, S1)
+function [Saida] = CalculoResults(Us1, S1)
 
 U = size(Us1,2);
 

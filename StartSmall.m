@@ -1,4 +1,4 @@
-function [SC] = StartSmall_copia(S, X, Y)
+function [SC] = StartSmall(S, X, Y)
 
 
 Px = linspace(X(1,1), X(1,2), S); % Contria um vetor de 10 posições com valores entre Xmin e Xmax
@@ -10,7 +10,7 @@ Cont = 1; %Contontador para preencher as Small
 for i = 1:S
     for j = 1:S
         
-        SC(Cont) = StationBase_copia;
+        SC(Cont) = StationBase;
         SC(Cont).ID = Cont;
         SC(Cont).X = Px(i);
         SC(Cont).Y = Py(j);

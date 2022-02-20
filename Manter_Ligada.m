@@ -34,7 +34,7 @@ function [Small, Macro, Us, usr_mantidos] = Manter_Ligada(Us, Macro, Small, Id_u
     
     for i = 1:U
         for j = 1:S
-                   [DR(i,j), CQI(i,j), SINR(i,j), I(j,i)] = CalculateChannel_copia(Us(Id_usr), Small(Ind), Small);  
+                   [DR(i,j), CQI(i,j), SINR(i,j), I(j,i)] = CalculateChannel(Us(Id_usr), Small(Ind), Small);  
         end
     end   % Calcula o SINR, CQI e DR (1 PRB) de cada usuário para cada Small
 

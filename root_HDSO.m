@@ -1,10 +1,10 @@
-function [saida, tempo_execucao, Micros_HDSO, UE] = root_FU(Usuarios, SmallCells, MacroCells, UE)
+function [saida, tempo_execucao, Micros_HDSO, UE] = root_HDSO(Usuarios, SmallCells, MacroCells, UE)
 
 % -------------------------------------------------------------------------
 % Parte III --> Criação do Cenário para etapa de otimização
 % -------------------------------------------------------------------------
 
-[U, Small, Macro, TU] = StartScenario_copia(Usuarios, SmallCells, MacroCells); % Usuários, SmallCells e MacroCells
+[U, Small, Macro, TU] = StartScenario(Usuarios, SmallCells, MacroCells); % Usuários, SmallCells e MacroCells
 
 
 b = length(U);
@@ -19,15 +19,15 @@ for j = 1:24
     end    
     
     % Conexão Usuário/Small
-    [Us1, S1] = ConexaoUs_copia(User, Small); % Usuários e Small
-    [M1] = Media_copia(Us1); % M = [DataRate SINR > DR <DR UD]
-    [V21] = Media_M_copia (S1, Us1); %S1 - SmallCells com nº(S1.U) e indices(S1.VU) de usuarios conectados
-    [ON, OFF(j,:)] = Switch_OFF_algorithm(Macro, S1,Us1,V21);
+    [Us1, S1] = ConexaoUs(User, Small); % Usuários e Small
+    [M1] = Media(Us1); % M = [DataRate SINR > DR <DR UD]
+    [V21] = Media_M(S1, Us1); %S1 - SmallCells com nº(S1.U) e indices(S1.VU) de usuarios conectados
+    [ON, OFF(j,:)] = HDSO_algorithm(Macro, S1,Us1,V21);
     SM(j) = ON; % Quantidade de micros que devem ser ligadas 
     %OFF(j,:) - indica quais micros devem ser desligadas
     fprintf('Implementando FU para a hora #%d!\n', j);
     
-    [saida(j,:), Micros_HDSO(j,:)] = Seleciona_RRH(User, OFF(j,:), Macro, Small);
+    [saida(j,:), Micros_HDSO(j,:)] = Seleciona_RRH_HDSO(User, OFF(j,:), Macro, Small);
     
     
     

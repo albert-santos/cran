@@ -9,7 +9,7 @@ function [Us, Small] = ConexaoUs_alt(Us, Small)
         for j = 1:S
             Id_Small = Us(i).EBC(j);
             if  Id_Small ~= 0
-                   [DR(i,j), CQI(i,j), SINR(i,j), I(j,i)] = CalculateChannel_copia(Us(i), Small(Id_Small), Small);
+                   [DR(i,j), CQI(i,j), SINR(i,j), I(j,i)] = CalculateChannel(Us(i), Small(Id_Small), Small);
                     % Calcula o SINR, CQI e DR (1 PRB) de cada usuário para cada Small
             else
                 DR(i,j) = 0;

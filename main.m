@@ -86,11 +86,11 @@ end
 %tic
 for i = 1:Sim
     i
-[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i), UE_FU(i,:)] = root_FU(U,S,M,UE);
+[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i), UE_HDSO(i,:)] = root_HDSO(U,S,M,UE);
 fprintf('Fim da Iteração #%d\n', i);
 end
 
-[UserPosition_FU] = Users_position(UE_FU, Sim); % Posicao dos usuários para cada hora
+[UserPosition_FU] = Users_position(UE_HDSO, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition_FU] = Smalls_position(Micros_HDSO, Sim); % Posição das SmallCells selecionadas para cada hora
 
 writematrix(UserPosition_FU,'HDSO_positions/UserPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
@@ -143,8 +143,8 @@ for i=1:24
     Prob_bloqueio_FU(i,k) = sum(saida_HDSO(i,2,k),1)./sum((saida_HDSO(i,1,k)+saida_HDSO(i,2,k)),1);
 end
 
-save('Prob_bloqueio_SA.mat', 'Prob_bloqueio_SA');
-save('Prob_bloqueio_FU.mat', 'Prob_bloqueio_FU');
+save('SA_Results/Prob_bloqueio_SA.mat', 'Prob_bloqueio_SA');
+save('HDSO_Results/Prob_bloqueio_FU.mat', 'Prob_bloqueio_FU');
 
 temp = size(tempo_execucao_1, 1);
 tempo_execucao_SA = zeros(temp,1);
@@ -170,37 +170,37 @@ end
 % usr_por_micro_SA_1000 = Usuarios_por_Micro_SA(:, :, 2);
 % usr_por_micro_SA_1500 = Usuarios_por_Micro_SA(:, :, 3);
 
-% save('usr_por_micro_SA_500.mat', 'usr_por_micro_SA_500');
-% save('usr_por_micro_SA_1000.mat', 'usr_por_micro_SA_1000');
-% save('usr_por_micro_SA_1500.mat', 'usr_por_micro_SA_1500');
+% save('SA_Results/usr_por_micro_SA_500.mat', 'usr_por_micro_SA_500');
+% save('SA_Results/usr_por_micro_SA_1000.mat', 'usr_por_micro_SA_1000');
+% save('SA_Results/usr_por_micro_SA_1500.mat', 'usr_por_micro_SA_1500');
 
 % usr_por_micro_HDSO_500 = Usuarios_por_Micro_HDSO(:, :, 1);
 % usr_por_micro_HDSO_1000 = Usuarios_por_Micro_HDSO(:, :, 2);
 % usr_por_micro_HDSO_1500 = Usuarios_por_Micro_HDSO(:, :, 3);
 
-% save('usr_por_micro_HDSO_500.mat', 'usr_por_micro_HDSO_500');
-% save('usr_por_micro_HDSO_1000.mat', 'usr_por_micro_HDSO_1000');
-% save('usr_por_micro_HDSO_1500.mat', 'usr_por_micro_HDSO_1500');
+% save('HDSO_Results/usr_por_micro_HDSO_500.mat', 'usr_por_micro_HDSO_500');
+% save('HDSO_Results/usr_por_micro_HDSO_1000.mat', 'usr_por_micro_HDSO_1000');
+% save('HDSO_Results/usr_por_micro_HDSO_1500.mat', 'usr_por_micro_HDSO_1500');
 %-----------------------------------------------------------------------------
 % saida_SA_500 = saida_SA(:, :, 1);
 % saida_SA_1000 = saida_SA(:, :, 2);
 % saida_SA_1500 = saida_SA(:, :, 3);
 
 
-% save('SA_500.mat', 'saida_SA_500');
-% save('SA_1000.mat', 'saida_SA_1000');
-% save('SA_1500.mat', 'saida_SA_1500');
+% save('SA_Results/SA_500.mat', 'saida_SA_500');
+% save('SA_Results/SA_1000.mat', 'saida_SA_1000');
+% save('SA_Results/SA_1500.mat', 'saida_SA_1500');
 
 % saida_HDSO_500 = saida_HDSO(:, :, 1);
 % saida_HDSO_1000 = saida_HDSO(:, :, 2);
 % saida_HDSO_1500 = saida_HDSO(:, :, 3);
 
-% save('HDSO_500.mat', 'saida_HDSO_500');
-% save('HDSO_1000.mat', 'saida_HDSO_1000');
-% save('HDSO_1500.mat', 'saida_HDSO_1500');
+% save('HDSO_Results/HDSO_500.mat', 'saida_HDSO_500');
+% save('HDSO_Results/HDSO_1000.mat', 'saida_HDSO_1000');
+% save('HDSO_Results/HDSO_1500.mat', 'saida_HDSO_1500');
 
-% save('Resultados_SA.mat', 'saida_SA');
-% save('Resultados_HDSO.mat', 'saida_HDSO');
+% save('SA_Results/Resultados_SA.mat', 'saida_SA');
+% save('HDSO_Results/Resultados_HDSO.mat', 'saida_HDSO');
 
 % x=(1:24);
 % y1 =saida_SA(:,9,1);
@@ -356,9 +356,9 @@ end
 % vazao_SA_1000 = sum(saida_SA(:,3,2),1)/24;
 % vazao_SA_1500 = sum(saida_SA(:,3,3),1)/24;
 % 
-% save('Vazao_Media_SA_500.mat', 'vazao_SA_500');
-% save('Vazao_Media_SA_1000.mat', 'vazao_SA_1000');
-% save('Vazao_Media_SA_1500.mat', 'vazao_SA_1500');
+% save('SA_Results/Vazao_Media_SA_500.mat', 'vazao_SA_500');
+% save('SA_Results/Vazao_Media_SA_1000.mat', 'vazao_SA_1000');
+% save('SA_Results/Vazao_Media_SA_1500.mat', 'vazao_SA_1500');
 % 
 % vazao_HDSO_500 = sum(saida_HDSO(:,3,1), 1)/24;
 % vazao_HDSO_1000 = sum(saida_HDSO(:,3,2), 1)/24;

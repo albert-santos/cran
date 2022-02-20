@@ -1,4 +1,4 @@
-function [ON, OFF] = Switch_OFF_algorithm(Macro2, S2,Us2, V21) %HSI)
+function [ON, OFF] = HDSO_algorithm(Macro2, S2,Us2, V21) %HSI)
     S = length(S2);
     TS = length(S2);
     OFF = [];  % conjunto de micros que devem ser desligadas
@@ -7,7 +7,7 @@ function [ON, OFF] = Switch_OFF_algorithm(Macro2, S2,Us2, V21) %HSI)
    
 
    while S ~= 0
-        UV = Funcao_Util_I(S2, V21);
+        UV = Funcao_Util_HDSO(S2, V21);
         UV = sortrows(UV, -5); % Ordenando pelo valor da função util de cada Small
         Ind = UV(S,1); %Índice da Small com menor valor da FU
         Total_Usuarios = S2(Ind).U;
@@ -61,7 +61,7 @@ function [ON, OFF] = Switch_OFF_algorithm(Macro2, S2,Us2, V21) %HSI)
 
         S = S - 1;
         UV(:,:) = [];
-        [V21] = Media_M_copia (S2, Us2);
+        [V21] = Media_M(S2, Us2);
 
     end
 

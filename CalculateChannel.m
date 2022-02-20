@@ -1,4 +1,4 @@
-function [DR, CQI, SINR, I] = CalculateChannel_copia(U, S, Small)
+function [DR, CQI, SINR, I] = CalculateChannel(U, S, Small)
 
    
 D = (((U.X - S.X)^2) + ((U.Y - S.Y)^2))^0.5;  %Distancia de Euclides

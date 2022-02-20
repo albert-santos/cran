@@ -48,7 +48,7 @@ for i=0:TS
      melhor_selecao = A.position;
      menor_valor = A.cost;
      
-     [saida, S1] = SelecionaB_copia(i, Us1, melhor_selecao, Macro, Small);
+     [saida, S1] = SelecionaB(i, Us1, melhor_selecao, Macro, Small);
      
      if saida(1,2) < (Total_US*0.01) || (i > 0.9*TS) % Condições de parada do loop. 
          %Nº de usuários ser menor que 0,1% do total de usuários daquele

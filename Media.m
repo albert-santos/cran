@@ -1,4 +1,4 @@
-function [M] = Media_copia(U)
+function [M] = Media(U)
 
     T = length(U);
     

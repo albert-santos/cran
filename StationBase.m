@@ -1,4 +1,4 @@
-classdef  StationBase_copia
+classdef  StationBase
     
     properties
         ID; % Identidade

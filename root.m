@@ -4,7 +4,7 @@ function [saida, tempo_execucao, Micros, U] = root(Usuarios, SmallCells, MacroCe
 % Parte III --> Criação do Cenário para etapa de otimização
 % -------------------------------------------------------------------------
 
-[U, Small, Macro, ~] = StartScenario_copia(Usuarios, SmallCells, MacroCells); % Usuários, SmallCells e MacroCells
+[U, Small, Macro, ~] = StartScenario(Usuarios, SmallCells, MacroCells); % Usuários, SmallCells e MacroCells
 
 b = length(U);
 for j = 1:24
@@ -18,9 +18,9 @@ for j = 1:24
     end    
     
     % Conexão Usuário/Small
-    [Us1, S1] = ConexaoUs_copia(User, Small); % Usuários e Small
-    [M1] = Media_copia(Us1); % M = [DataRate SINR > DR <DR UD]
-    [V21] = Media_M_copia (S1, Us1); %S1 - SmallCells com nº(S1.U) e indices(S1.VU) de usuarios conectados
+    [Us1, S1] = ConexaoUs(User, Small); % Usuários e Small
+    [M1] = Media(Us1); % M = [DataRate SINR > DR <DR UD]
+    [V21] = Media_M(S1, Us1); %S1 - SmallCells com nº(S1.U) e indices(S1.VU) de usuarios conectados
     [saida(j,:), numero_SC(j, :), Micros(j, :)] = SA_algorithm (V21, Us1, Small, Macro);
     fprintf('Implementando SA para a hora #%d!\n', j);
 
@@ -43,7 +43,7 @@ end
 %         end       
 %    
 %       
-%       [saida(j,:)] = SelecionaB_copia(numero_SC, User, melhor_selecao(j,:,:), Macro, Small);
+%       [saida(j,:)] = SelecionaB(numero_SC, User, melhor_selecao(j,:,:), Macro, Small);
 
    
 %     clear User;
