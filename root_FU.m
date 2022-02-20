@@ -1,4 +1,4 @@
-function [saida, tempo_execucao, Micros_HDSO, U] = root_FU(Usuarios, SmallCells, MacroCells)
+function [saida, tempo_execucao, Micros_HDSO, UE] = root_FU(Usuarios, SmallCells, MacroCells, UE)
 
 % -------------------------------------------------------------------------
 % Parte III --> Criação do Cenário para etapa de otimização
@@ -12,8 +12,8 @@ for j = 1:24
     tic
     a = 1;
     for k = 1:b
-        if (U(k).M == j)
-            User(a) = U(k);
+        if (UE(k).M == j)
+            User(a) = UE(k);
             a = a + 1;
         end
     end    

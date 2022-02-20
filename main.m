@@ -36,9 +36,9 @@ end
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-writematrix(UserPosition,'UserPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition,'SmallPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida(:,:,Sim),'SaidaSA.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition,'SA_positions/UserPosition.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition,'SA_positions/SmallPosition.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida(:,:,Sim),'SA_positions/SaidaSA.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -86,16 +86,16 @@ end
 %tic
 for i = 1:Sim
     i
-[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i), UE_FU(i,:)] = root_FU(U,S,M);
+[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i), UE_FU(i,:)] = root_FU(U,S,M,UE);
 fprintf('Fim da Iteração #%d\n', i);
 end
 
 [UserPosition_FU] = Users_position(UE_FU, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition_FU] = Smalls_position(Micros_HDSO, Sim); % Posição das SmallCells selecionadas para cada hora
 
-writematrix(UserPosition_FU,'UserPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition_FU,'SmallPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida_FU(:,:,Sim),'Saida_HSDSO.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition_FU,'HDSO_positions/UserPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition_FU,'HDSO_positions/SmallPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida_FU(:,:,Sim),'HDSO_positions/Saida_HSDSO.xls', 'WriteMode', 'overwritesheet');
 
 T1 = size(saida_FU, 1);
 T2 = size(saida_FU, 2);
@@ -202,34 +202,34 @@ end
 % save('Resultados_SA.mat', 'saida_SA');
 % save('Resultados_HDSO.mat', 'saida_HDSO');
 
-x=(1:24);
-y1 =saida_SA(:,9,1);
-y2 = saida_HDSO(:,9,1);
-y3 =saida_SA(:,9,2);
-y4 = saida_HDSO(:,9,2);
-y5 =saida_SA(:,9,3);
-y6 = saida_HDSO(:,9,3);
-figure1 = figure('Name', 'Número de Micros Selecionadas','Color',[1 1 1]);
-axes1 = axes('Parent',figure1);
-hold(axes1,'on');
-plot(x,y1, 's', 'LineStyle','-');
-hold on
-plot(x,y2, '^' ,'LineStyle','-');
-hold on
-plot(x,y3, 's', 'LineStyle','-');
-hold on
-plot(x,y4,'^', 'LineStyle','-');
-hold on
-plot(x,y5, 's', 'LineStyle','-');
-hold on
-plot(x,y6,'^', 'LineStyle','-');
-hold on
-xlabel('Períodos do dia (Hrs)')
-ylabel('Micros Ativas')
-set(axes1,'XTick',(1:24),'XTickLabel',(1:24));
-set(axes1,'YTick',(0:10:100),'YTickLabel',(0:10:100));
-legend1 = legend('SA-500', 'HDSO-500', 'SA-1000', 'HDSO-1000', 'SA-1500', 'HDSO-1500');
-set(legend1,'Location','southeast');
+% x=(1:24);
+% y1 =saida_SA(:,9,1);
+% y2 = saida_HDSO(:,9,1);
+% y3 =saida_SA(:,9,2);
+% y4 = saida_HDSO(:,9,2);
+% y5 =saida_SA(:,9,3);
+% y6 = saida_HDSO(:,9,3);
+% figure1 = figure('Name', 'Número de Micros Selecionadas','Color',[1 1 1]);
+% axes1 = axes('Parent',figure1);
+% hold(axes1,'on');
+% plot(x,y1, 's', 'LineStyle','-');
+% hold on
+% plot(x,y2, '^' ,'LineStyle','-');
+% hold on
+% plot(x,y3, 's', 'LineStyle','-');
+% hold on
+% plot(x,y4,'^', 'LineStyle','-');
+% hold on
+% plot(x,y5, 's', 'LineStyle','-');
+% hold on
+% plot(x,y6,'^', 'LineStyle','-');
+% hold on
+% xlabel('Períodos do dia (Hrs)')
+% ylabel('Micros Ativas')
+% set(axes1,'XTick',(1:24),'XTickLabel',(1:24));
+% set(axes1,'YTick',(0:10:100),'YTickLabel',(0:10:100));
+% legend1 = legend('SA-500', 'HDSO-500', 'SA-1000', 'HDSO-1000', 'SA-1500', 'HDSO-1500');
+% set(legend1,'Location','southeast');
 
 
 % 
@@ -287,27 +287,27 @@ set(legend1,'Location','southeast');
 %     Prob_bloqueio_FU(i,2) = sum(saida2(i,2),1)./sum((saida2(i,1)+saida2(i,2)),1);
 % end
     
-    x(1:24);
-    figure3 = figure('Name', 'Probabilidade de Bloqueio','Color',[1 1 1]);
-    axes3 = axes('Parent',figure3);
-    hold(axes3,'on');
-    plot(x,Prob_bloqueio_SA(:,1),'s', 'LineStyle','-');
-    hold on
-    plot(x,Prob_bloqueio_FU(:,1), '^', 'LineStyle','-');
-    hold on
-    plot(x,Prob_bloqueio_SA(:,2), 's', 'LineStyle','-');
-    hold on
-    plot(x,Prob_bloqueio_FU(:,2), '^', 'LineStyle','-');
-    hold on
-    plot(x,Prob_bloqueio_SA(:,3), 's', 'LineStyle','-');
-    hold on
-    plot(x,Prob_bloqueio_FU(:,3), '^', 'LineStyle','-');
-    hold on
-    %xlabel('')
-    ylabel('Probabilidade de Bloqueio')
-    set(axes3,'XTick',(1:24),'XTickLabel',(1:24));
-    legend3 = legend('SA-500', 'HDSO-500', 'SA-1000', 'HDSO-1000', 'SA-1500', 'HDSO-1500');
-    set(legend3,'Location','northeast');
+%     x(1:24);
+%     figure3 = figure('Name', 'Probabilidade de Bloqueio','Color',[1 1 1]);
+%     axes3 = axes('Parent',figure3);
+%     hold(axes3,'on');
+%     plot(x,Prob_bloqueio_SA(:,1),'s', 'LineStyle','-');
+%     hold on
+%     plot(x,Prob_bloqueio_FU(:,1), '^', 'LineStyle','-');
+%     hold on
+%     plot(x,Prob_bloqueio_SA(:,2), 's', 'LineStyle','-');
+%     hold on
+%     plot(x,Prob_bloqueio_FU(:,2), '^', 'LineStyle','-');
+%     hold on
+%     plot(x,Prob_bloqueio_SA(:,3), 's', 'LineStyle','-');
+%     hold on
+%     plot(x,Prob_bloqueio_FU(:,3), '^', 'LineStyle','-');
+%     hold on
+%     %xlabel('')
+%     ylabel('Probabilidade de Bloqueio')
+%     set(axes3,'XTick',(1:24),'XTickLabel',(1:24));
+%     legend3 = legend('SA-500', 'HDSO-500', 'SA-1000', 'HDSO-1000', 'SA-1500', 'HDSO-1500');
+%     set(legend3,'Location','northeast');
     
     
     
@@ -328,53 +328,53 @@ set(legend1,'Location','southeast');
 % tempo_execucao_FU = tempo_execucao_FU./60;  
 
 
-x=(1:24);
-figure4 = figure('Name', 'Tempo de execução dos algoritmos','Color',[1 1 1]);
-axes4 = axes('Parent',figure4);
-hold(axes4,'on');
-plot(x,t_execucao_SA(:,1), 's', 'LineStyle','-');
-hold on
-plot(x,t_execucao_HDSO(:,1), '^', 'LineStyle','-');
-hold on
-plot(x,t_execucao_SA(:,2), 's', 'LineStyle','-');
-hold on
-plot(x,t_execucao_HDSO(:,2), '^', 'LineStyle','-');
-hold on
-plot(x,t_execucao_SA(:,3), 's', 'LineStyle','-');
-hold on
-plot(x,t_execucao_HDSO(:,3), '^', 'LineStyle','-');
-hold on
-xlabel('Períodos do dia (Hrs)')
-ylabel('Tempo por execução(min)')
-set(axes4,'YTick',(0:0.1:1.5),'YTickLabel',(0:0.1:1.5));
-set(axes4,'XTick',(1:24),'XTickLabel',(1:24));
-legend4 = legend('SA-500', 'HDSO-500', 'SA-1000', 'HDSO-1000', 'SA-1500', 'HDSO-1500');
-set(legend4,'Location','southeast');
-
-
-vazao_SA_500 = sum(saida_SA(:,3,1),1)/24;
-vazao_SA_1000 = sum(saida_SA(:,3,2),1)/24;
-vazao_SA_1500 = sum(saida_SA(:,3,3),1)/24;
-
-save('Vazao_Media_SA_500.mat', 'vazao_SA_500');
-save('Vazao_Media_SA_1000.mat', 'vazao_SA_1000');
-save('Vazao_Media_SA_1500.mat', 'vazao_SA_1500');
-
-vazao_HDSO_500 = sum(saida_HDSO(:,3,1), 1)/24;
-vazao_HDSO_1000 = sum(saida_HDSO(:,3,2), 1)/24;
-vazao_HDSO_1500 = sum(saida_HDSO(:,3,3), 1)/24;
-
-graf = [vazao_SA_500 vazao_HDSO_500; vazao_SA_1000 vazao_HDSO_1000; vazao_SA_1500 vazao_HDSO_1500];
-
-    figure5 = figure('Name', 'Vazão Média','Color',[1 1 1]);
-    axes5 = axes('Parent',figure5);
-    hold(axes5,'on');
-    bar(graf)
-    ylabel('Vazão Média')
-    xlabel('Quantidade de usuários')
-    set(axes5,'XTick',[1 2 3],'XTickLabel',{'500','1000','1500'});
-    legend5 = legend('SA', 'HDSO');
-    set(legend5,'Location','northwest');
+% x=(1:24);
+% figure4 = figure('Name', 'Tempo de execução dos algoritmos','Color',[1 1 1]);
+% axes4 = axes('Parent',figure4);
+% hold(axes4,'on');
+% plot(x,t_execucao_SA(:,1), 's', 'LineStyle','-');
+% hold on
+% plot(x,t_execucao_HDSO(:,1), '^', 'LineStyle','-');
+% hold on
+% plot(x,t_execucao_SA(:,2), 's', 'LineStyle','-');
+% hold on
+% plot(x,t_execucao_HDSO(:,2), '^', 'LineStyle','-');
+% hold on
+% plot(x,t_execucao_SA(:,3), 's', 'LineStyle','-');
+% hold on
+% plot(x,t_execucao_HDSO(:,3), '^', 'LineStyle','-');
+% hold on
+% xlabel('Períodos do dia (Hrs)')
+% ylabel('Tempo por execução(min)')
+% set(axes4,'YTick',(0:0.1:1.5),'YTickLabel',(0:0.1:1.5));
+% set(axes4,'XTick',(1:24),'XTickLabel',(1:24));
+% legend4 = legend('SA-500', 'HDSO-500', 'SA-1000', 'HDSO-1000', 'SA-1500', 'HDSO-1500');
+% set(legend4,'Location','southeast');
+% 
+% 
+% vazao_SA_500 = sum(saida_SA(:,3,1),1)/24;
+% vazao_SA_1000 = sum(saida_SA(:,3,2),1)/24;
+% vazao_SA_1500 = sum(saida_SA(:,3,3),1)/24;
+% 
+% save('Vazao_Media_SA_500.mat', 'vazao_SA_500');
+% save('Vazao_Media_SA_1000.mat', 'vazao_SA_1000');
+% save('Vazao_Media_SA_1500.mat', 'vazao_SA_1500');
+% 
+% vazao_HDSO_500 = sum(saida_HDSO(:,3,1), 1)/24;
+% vazao_HDSO_1000 = sum(saida_HDSO(:,3,2), 1)/24;
+% vazao_HDSO_1500 = sum(saida_HDSO(:,3,3), 1)/24;
+% 
+% graf = [vazao_SA_500 vazao_HDSO_500; vazao_SA_1000 vazao_HDSO_1000; vazao_SA_1500 vazao_HDSO_1500];
+% 
+%     figure5 = figure('Name', 'Vazão Média','Color',[1 1 1]);
+%     axes5 = axes('Parent',figure5);
+%     hold(axes5,'on');
+%     bar(graf)
+%     ylabel('Vazão Média')
+%     xlabel('Quantidade de usuários')
+%     set(axes5,'XTick',[1 2 3],'XTickLabel',{'500','1000','1500'});
+%     legend5 = legend('SA', 'HDSO');
+%     set(legend5,'Location','northwest');
     
 
 % 
