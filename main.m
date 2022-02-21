@@ -8,7 +8,7 @@ clearvars
 for k=1:1
     
     if k==1
-        U=360;
+        U=100;
     end
     if k==2
         U=50;
