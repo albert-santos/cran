@@ -167,9 +167,20 @@ end
 
 usr_por_micro_SA_100 = Usuarios_por_Micro_SA(:, :, 1);
 save('SA_Results/usr_por_micro_SA_100.mat', 'usr_por_micro_SA_100');
+saida_SA_100 = saida_SA(:, :, 1);
+save('SA_Results/SA_100.mat', 'saida_SA_100');
+total_usuarios_conectados = saida_SA_100(:,1) - saida_SA_100(:,2);
+usuarios_conectados_nas_micros = saida_SA_100(:,10);
+SA_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micros; 
 
 usr_por_micro_HDSO_100 = Usuarios_por_Micro_HDSO(:, :, 1);
 save('HDSO_Results/usr_por_micro_HDSO_100.mat', 'usr_por_micro_HDSO_100');
+saida_HDSO_100 = saida_HDSO(:, :, 1);
+save('HDSO_Results/HDSO_100.mat', 'saida_HDSO_100');
+total_usuarios_conectados = saida_HDSO_100(:,1) - saida_HDSO_100(:,2);
+usuarios_conectados_nas_micros = saida_HDSO_100(:,10);
+HDSO_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micros;
+
 
 %Organizando usuários por micro
 % usr_por_micro_SA_500 = Usuarios_por_Micro_SA(:, :, 1);
