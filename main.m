@@ -36,9 +36,9 @@ end
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-writematrix(UserPosition,'SA_positions/UserPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition,'SA_positions/SmallPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida(:,:,Sim),'SA_positions/SaidaSA.xls', 'WriteMode', 'overwritesheet');
+% writematrix(UserPosition,'SA_positions/UserPosition.xls', 'WriteMode', 'overwritesheet');
+% writematrix(EnbsPosition,'SA_positions/SmallPosition.xls', 'WriteMode', 'overwritesheet');
+% writematrix(saida(:,:,Sim),'SA_positions/SaidaSA.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -164,6 +164,12 @@ t_execucao_HDSO(:,k) = tempo_execucao_FU./60;
 
 
 end
+
+usr_por_micro_SA_100 = Usuarios_por_Micro_SA(:, :, 1);
+save('SA_Results/usr_por_micro_SA_100.mat', 'usr_por_micro_SA_100');
+
+usr_por_micro_HDSO_100 = Usuarios_por_Micro_HDSO(:, :, 1);
+save('HDSO_Results/usr_por_micro_HDSO_100.mat', 'usr_por_micro_HDSO_100');
 
 %Organizando usuários por micro
 % usr_por_micro_SA_500 = Usuarios_por_Micro_SA(:, :, 1);
