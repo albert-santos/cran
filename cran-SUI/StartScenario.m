@@ -6,8 +6,8 @@
 % M Total de MacroCells
 
 % Eixos dos cenários.  (Área total = 4 Km²)
-X(1,:) = [0 500]; % Eixo X minimo e máximo.
-Y(1,:) = [0 500]; % Eixo Y minimo e máximo.
+X(1,:) = [0 1000]; % Eixo X minimo e máximo.
+Y(1,:) = [0 1000]; % Eixo Y minimo e máximo.
 
 
 % Confirmar os parâmetros usados % ----------------------------------------
@@ -17,7 +17,7 @@ Y(1,:) = [0 500]; % Eixo Y minimo e máximo.
 
 [Small] = StartSmall(SC, X, Y); % Função para iniciar as SmallCells 
 
-[Macro] = StartMacro(MC); % Função para iniciar as MacriCells
+[Macro] = StartMacro(MC, X, Y); % Função para iniciar as MacriCells
 
 
  

@@ -9,10 +9,30 @@ function [Us, Small] = ConexaoUsM(Us, Small)
                    [DR(i,j), CQI(i,j), SINR(i,j)] = CalculateChannel(Us(i), Small(j), Small);  
         end
     end   % Calcula o SINR, CQI e DR (1 PRB) de cada usuário para cada Small
-
-   
-    for i = 1:U
+    
+    
+    
+    % Identificando a quantidade PRB requisitadas por cadas usuário
+    % A prioridade de conexão será primeiro para os usuários que demandam
+    % poucos PRB, ou seja, cujo sinal possue maior qualidade
+    for  i=1:U
+        
+        [T, ~] = max(DR(i,:)); 
+        PR = ceil(Us(i).R_DR/T);
+        number_of_prbs_requested_by_users(i,1) = i;
+        number_of_prbs_requested_by_users(i,2) = PR;
+        
+    end
+    % Organizando em ordem crescente pela quantidade de PRB requisitados de cada usuário
+    number_of_prbs_requested_by_users =  sortrows(number_of_prbs_requested_by_users, 2);
+    
+    
+    
+    for user_index = 1:U
         aux = 0;
+        
+        i = number_of_prbs_requested_by_users(user_index,1);
+        
      if (Us(i).C == false)
         
       while  aux == 0
@@ -55,7 +75,7 @@ function [Us, Small] = ConexaoUsM(Us, Small)
      cont = 1;  
      Small(j).VU = [];
      for i = 1:U
-        if (Us(i).EB == j)
+        if (Us(i).EB == j && Us(i).ES == 2)
             Small(j).VU(cont) = i;
             cont = cont + 1;
         end 

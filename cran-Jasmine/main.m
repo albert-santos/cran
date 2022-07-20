@@ -5,6 +5,8 @@ clearvars
 % 02 -- 1000
 % 03 -- 1500
 
+rng(42);
+
 for k=1:1
     
     if k==1
@@ -21,7 +23,7 @@ for k=1:1
 
 Sim = 1;    % Total de Execuções
 %U = 500;     % Total de Usuários
-S = 4;      % Total de Small
+S = 9;      % Total de Small
 M = 1;       % Total de Macro
 
 %tic
@@ -36,9 +38,9 @@ end
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-% writematrix(UserPosition,'SA_positions/UserPosition.xls', 'WriteMode', 'overwritesheet');
-% writematrix(EnbsPosition,'SA_positions/SmallPosition.xls', 'WriteMode', 'overwritesheet');
-% writematrix(saida(:,:,Sim),'SA_positions/SaidaSA.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition,'SA_positions/UserPosition_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition,'SA_positions/SmallPosition_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -93,9 +95,9 @@ end
 [UserPosition_FU] = Users_position(UE_HDSO, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition_FU] = Smalls_position(Micros_HDSO, Sim); % Posição das SmallCells selecionadas para cada hora
 
-writematrix(UserPosition_FU,'HDSO_positions/UserPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition_FU,'HDSO_positions/SmallPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida_FU(:,:,Sim),'HDSO_positions/Saida_HSDSO.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition_FU,'HDSO_positions/UserPosition_HDSO_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition_FU,'HDSO_positions/SmallPosition_HDSO_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida_FU(:,:,Sim),'HDSO_positions/Saida_HSDSO_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
 
 T1 = size(saida_FU, 1);
 T2 = size(saida_FU, 2);

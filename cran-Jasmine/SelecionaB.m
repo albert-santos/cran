@@ -17,13 +17,15 @@ end
   end
   %Conectando as smallcells (já organizadas por numero de usr ou por vazao)
   %de acordo com os percentuais e desligando as outras.
-
-
-[Us1, S1] = ConexaoUs_alt(User, Small);
+% 
+[Us1, M1] = ConexaoUsM(User, Macro);
+% 
+[Us1, S1] = ConexaoUs_alt(Us1, Small);
+% [Us1, S1] = ConexaoUs_alt(User, Small);
 [M1] = Media(Us1);
 
 
-[Us1, M1] = ConexaoUsM(Us1, Macro);
+% [Us1, M1] = ConexaoUsM(Us1, Macro);
 
 
 
