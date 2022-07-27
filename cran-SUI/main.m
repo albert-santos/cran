@@ -10,7 +10,7 @@ rng(42);
 for k=1:1
     
     if k==1
-        U=400;
+        U=800;
     end
     if k==2
         U=50;
@@ -23,7 +23,7 @@ for k=1:1
 
 Sim = 1;    % Total de Execuções
 %U = 500;     % Total de Usuários
-S = 9;      % Total de Small
+S = 10;      % Total de Small
 M = 1;       % Total de Macro
 
 %tic
