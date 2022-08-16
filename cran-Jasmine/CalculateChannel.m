@@ -1,28 +1,28 @@
 function [DR, CQI, SINR, I] = CalculateChannel(U, S, Small)
 
-   
+% teste
 D = (((U.X - S.X)^2) + ((U.Y - S.Y)^2))^0.5;  %Distancia de Euclides
 
 if (D <= S.Cob && S.D)
 
-    WN = 7.4e-13; % Ruído Branco (CORRIGIR)
-    I = 0; % Interferencia gerada por outras células    
+    WN = 7.4e-13; % Ruï¿½do Branco (CORRIGIR)
+    I = 0; % Interferencia gerada por outras cï¿½lulas    
     
     
-    D0 = 100; % Distância Referência
+    D0 = 100; % Distï¿½ncia Referï¿½ncia
     Sv = 9.4; % 8.2 to 10.6 dB ==> 
     V = 3e8; % Velocidade da luz (m/s) no vacuo
     L = V / S.Fr; % Lambda
-    Hr = 1.2; % Altura de recepção
-    Hb = S.H; % Altura da EstaçãoBase,
+    Hr = 1.2; % Altura de recepï¿½ï¿½o
+    Hb = S.H; % Altura da Estaï¿½ï¿½oBase,
     E = 16; % Equalizado
     
     
     % ---------------Jasmine Model --------------------------
     
-    % Frequência em GHz
+    % Frequï¿½ncia em GHz
     frequency_GHz = 2.6;
-    % Distância (km) entre a antena receptora e a antena transmissora
+    % Distï¿½ncia (km) entre a antena receptora e a antena transmissora
     distance_km = D * 1e-3;
     
     Afs = 92.4 + 20*log10(distance_km) + 20*log10(frequency_GHz);
@@ -35,7 +35,7 @@ if (D <= S.Cob && S.D)
     
     
     
-%     % Parâmetros Cenário SUI
+%     % Parï¿½metros Cenï¿½rio SUI
 %     a = 3.6;
 %     b = 0.005;
 %     c = 20;
@@ -61,7 +61,7 @@ if (D <= S.Cob && S.D)
 
     end
     
-    %I = 0; % Considerar apenas ruído branco
+    %I = 0; % Considerar apenas ruï¿½do branco
     SINR = (Pw / (WN + I));
 
     C = S.B / S.PRB;
