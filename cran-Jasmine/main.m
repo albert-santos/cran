@@ -2,11 +2,10 @@
 clearvars
 
 rng(42);
-
    
 Sim = 1;    % Total de Execuções
-U = 50;     % Total de Usuários
-S = 5;      % Total de Small
+U = 800;     % Total de Usuários
+S = 10;      % Total de Small
 M = 1;       % Total de Macro
 number_of_BBUs = 6; % Número de BBUs
 
@@ -90,7 +89,6 @@ writematrix(users_by_sector,'SA_positions/user_by_sector_with_JasmineModel.xls',
 writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
 writematrix(small_cell_status,'SA_positions/rrhs_status_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
 %-----------------------------------------------------------------------------
-
 
 
 
