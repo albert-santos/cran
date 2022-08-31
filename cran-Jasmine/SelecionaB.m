@@ -1,6 +1,8 @@
-function [Saida, S1] = SelecionaB (SS, User, melhor_selecao, Macro,Small)
+function [Saida, S1, small_cell_status] = SelecionaB (SS, User, melhor_selecao, Macro,Small)
 
 TS = size(Small,2);
+
+small_cell_status = zeros(1,TS);
 
 for i = 1:TS
     Small(i).D = false;
@@ -11,12 +13,14 @@ end
   for j = 1:SS  
     
       a = melhor_selecao(j,1);
-      Small(a).D = true;    
-      
+      Small(a).D = true;
+      small_cell_status(a) = 1;
       
   end
   %Conectando as smallcells (já organizadas por numero de usr ou por vazao)
   %de acordo com os percentuais e desligando as outras.
+  
+  
 % 
 [Us1, M1] = ConexaoUsM(User, Macro);
 % 

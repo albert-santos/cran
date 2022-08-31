@@ -5,8 +5,8 @@ rng(42);
 
    
 Sim = 1;    % Total de Execuções
-U = 800;     % Total de Usuários
-S = 10;      % Total de Small
+U = 50;     % Total de Usuários
+S = 5;      % Total de Small
 M = 1;       % Total de Macro
 number_of_BBUs = 6; % Número de BBUs
 
@@ -16,7 +16,7 @@ fprintf('Implementando cenário com #%d usuários\n ', U)
 
 for i = 1:Sim
     i
-[saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:)] = root(U,S,M);
+[saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root(U,S,M);
 fprintf('Fim da Iteração #%d\n', i);
 end
 %Micros(horas:total de micros: nº de iterações do código)
@@ -86,6 +86,9 @@ SA_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micr
 number_of_RRHs = S * S;
 [users_by_sector, mapping_rrh_bbu_sectors] = PSO_ROOT(usr_por_micro_SA_800, number_of_BBUs, number_of_RRHs);
 
+writematrix(users_by_sector,'SA_positions/user_by_sector_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(small_cell_status,'SA_positions/rrhs_status_with_JasmineModel.xls', 'WriteMode', 'overwritesheet');
 %-----------------------------------------------------------------------------
 
 

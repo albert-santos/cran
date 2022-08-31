@@ -1,4 +1,4 @@
-function [saida, tempo_execucao, Micros, U] = root(Usuarios, SmallCells, MacroCells)
+function [saida, tempo_execucao, Micros, U, small_cell_status] = root(Usuarios, SmallCells, MacroCells)
 
 % -------------------------------------------------------------------------
 % Parte III --> Criação do Cenário para etapa de otimização
@@ -27,7 +27,7 @@ for j = 1:24
 %     % Verifica as Small próximas ao usuário
 %     [User, ~] = NearbySmalls(User, Small);
     
-    [saida(j,:), numero_SC(j, :), Micros(j, :)] = SA_algorithm (V21, User, Small, Macro);
+    [saida(j,:), numero_SC(j, :), Micros(j, :), small_cell_status(j,:)] = SA_algorithm (V21, User, Small, Macro);
     fprintf('Implementando SA para a hora #%d!\n', j);
 
 
