@@ -1,36 +1,21 @@
 
 clearvars
-% ID -- Total de Usuários
-% 01 -- 500
-% 02 -- 1000
-% 03 -- 1500
 
 rng(42);
-
-for k=1:1
-    
-    if k==1
-        U=800;
-    end
-    if k==2
-        U=50;
-    end
-    if k==3
-        U=70;
-    end
-    
-  fprintf('Implementando cenário com #%d usuários\n ', U)
-
+   
 Sim = 1;    % Total de Execuções
-%U = 500;     % Total de Usuários
+U = 800;     % Total de Usuários
 S = 10;      % Total de Small
 M = 1;       % Total de Macro
+number_of_BBUs = 6; % Número de BBUs
+
+fprintf('Implementando cenário com #%d usuários\n ', U)
 
 %tic
 
 for i = 1:Sim
     i
-[saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:)] = root(U,S,M);
+[saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root(U,S,M);
 fprintf('Fim da Iteração #%d\n', i);
 end
 %Micros(horas:total de micros: nº de iterações do código)
@@ -38,9 +23,9 @@ end
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-writematrix(UserPosition,'SA_positions/UserPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition,'SA_positions/SmallPosition.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida(:,:,Sim),'SA_positions/SaidaSA.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition,'SA_positions/UserPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -70,156 +55,44 @@ for i = 1:Sim %nº de iterações do código
 end
 usr_por_micro(:,:) = round(usr_por_micro/Sim); 
 
-saida_SA(:,:,k) = round(saida1/Sim);
+saida_SA(:,:) = round(saida1/Sim);
 %z = toc;
 
 for i=1:24
     for j=1:size(Micros, 2)
-        Usuarios_por_Micro_SA(i, j, k) = usr_por_micro(i,j);
+        Usuarios_por_Micro_SA(i, j) = usr_por_micro(i,j);
     end
 end
 
-
-
-
-
-
-
-%tic
-for i = 1:Sim
-    i
-[saida_FU(:,:,i), tempo_execucao_2(:,i), Micros_HDSO(:, :, i), UE_HDSO(i,:)] = root_HDSO(U,S,M,UE);
-fprintf('Fim da Iteração #%d\n', i);
-end
-
-[UserPosition_FU] = Users_position(UE_HDSO, Sim); % Posicao dos usuários para cada hora
-[EnbsPosition_FU] = Smalls_position(Micros_HDSO, Sim); % Posição das SmallCells selecionadas para cada hora
-
-writematrix(UserPosition_FU,'HDSO_positions/UserPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition_FU,'HDSO_positions/SmallPosition_HDSO.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida_FU(:,:,Sim),'HDSO_positions/Saida_HSDSO.xls', 'WriteMode', 'overwritesheet');
-
-T1 = size(saida_FU, 1);
-T2 = size(saida_FU, 2);
-saida2 = zeros(T1,T2);
-
-for i = 1:Sim
-    for j=1 : T1
-        for h=1 : T2
-           saida2(j, h) = saida2 (j, h) + saida_FU(j, h, i);
-        end
-    end
-    
-end
-
-
-
-saida_HDSO(:,:,k) = round(saida2/Sim);
-
-
-T1 = size(Micros_HDSO, 1);
-T2 = size(Micros_HDSO, 2);
-usr_por_micro_HDSO = zeros(T1,T2);
-
-for i = 1:Sim
-    for j=1 : T1
-        for h=1 : T2
-           usr_por_micro_HDSO(j, h) = usr_por_micro_HDSO(j, h) + Micros_HDSO(j, h, i).U;
-        end
-    end
-    
-end
-
-usr_por_micro_HDSO(:,:) = round(usr_por_micro_HDSO/Sim);
 
 for i=1:24
-    for j=1:size(Micros_HDSO, 2)
-        Usuarios_por_Micro_HDSO(i, j, k) = usr_por_micro_HDSO(i,j);
-    end
+    Prob_bloqueio_SA(i) = sum(saida_SA(i,2),1)./sum((saida_SA(i,1)+saida_SA(i,2)),1);
 end
 
-%w=toc;
-
-for i=1:24
-    Prob_bloqueio_SA(i,k) = sum(saida_SA(i,2,k),1)./sum((saida_SA(i,1,k)+saida_SA(i,2,k)),1);   
-    Prob_bloqueio_FU(i,k) = sum(saida_HDSO(i,2,k),1)./sum((saida_HDSO(i,1,k)+saida_HDSO(i,2,k)),1);
-end
-
-% save('SA_Results/Prob_bloqueio_SA.mat', 'Prob_bloqueio_SA');
-% save('HDSO_Results/Prob_bloqueio_FU.mat', 'Prob_bloqueio_FU');
-
-temp = size(tempo_execucao_1, 1);
-tempo_execucao_SA = zeros(temp,1);
-tempo_execucao_FU = zeros(temp,1);
-for i=1:24
-    for j=1:Sim
-        tempo_execucao_FU(i) = tempo_execucao_FU(i)+ tempo_execucao_2(i, j);
-        tempo_execucao_SA(i) = tempo_execucao_SA(i)+ tempo_execucao_1(i, j);
-    end
-end
-
-tempo_execucao_SA = tempo_execucao_SA ./Sim;
-tempo_execucao_FU = tempo_execucao_FU./Sim;
-
-t_execucao_SA(:,k) = tempo_execucao_SA ./60;
-t_execucao_HDSO(:,k) = tempo_execucao_FU./60;  
+save('SA_Results/Prob_bloqueio_SA.mat', 'Prob_bloqueio_SA');
 
 
-end
-
-% usr_por_micro_SA_100 = Usuarios_por_Micro_SA(:, :, 1);
-% save('SA_Results/usr_por_micro_SA_100.mat', 'usr_por_micro_SA_100');
-% saida_SA_100 = saida_SA(:, :, 1);
-% save('SA_Results/SA_100.mat', 'saida_SA_100');
-% total_usuarios_conectados = saida_SA_100(:,1) - saida_SA_100(:,2);
-% usuarios_conectados_nas_micros = saida_SA_100(:,10);
-% SA_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micros; 
-% 
-% usr_por_micro_HDSO_100 = Usuarios_por_Micro_HDSO(:, :, 1);
-% save('HDSO_Results/usr_por_micro_HDSO_100.mat', 'usr_por_micro_HDSO_100');
-% saida_HDSO_100 = saida_HDSO(:, :, 1);
-% save('HDSO_Results/HDSO_100.mat', 'saida_HDSO_100');
-% total_usuarios_conectados = saida_HDSO_100(:,1) - saida_HDSO_100(:,2);
-% usuarios_conectados_nas_micros = saida_HDSO_100(:,10);
-% HDSO_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micros;
+usr_por_micro_SA_800 = Usuarios_por_Micro_SA(:, :);
+save('SA_Results/usr_por_micro_SA_800.mat', 'usr_por_micro_SA_800');
+saida_SA_800 = saida_SA(:, :);
+save('SA_Results/SA_800.mat', 'saida_SA_800');
+total_usuarios_conectados = saida_SA_800(:,1) - saida_SA_800(:,2);
+usuarios_conectados_nas_micros = saida_SA_800(:,10);
+SA_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micros; 
 
 
-%Organizando usuários por micro
-% usr_por_micro_SA_500 = Usuarios_por_Micro_SA(:, :, 1);
-% usr_por_micro_SA_1000 = Usuarios_por_Micro_SA(:, :, 2);
-% usr_por_micro_SA_1500 = Usuarios_por_Micro_SA(:, :, 3);
+% Balanceamento das BBUs
+number_of_RRHs = S * S;
+[users_by_sector, mapping_rrh_bbu_sectors] = PSO_ROOT(usr_por_micro_SA_800, number_of_BBUs, number_of_RRHs);
 
-% save('SA_Results/usr_por_micro_SA_500.mat', 'usr_por_micro_SA_500');
-% save('SA_Results/usr_por_micro_SA_1000.mat', 'usr_por_micro_SA_1000');
-% save('SA_Results/usr_por_micro_SA_1500.mat', 'usr_por_micro_SA_1500');
-
-% usr_por_micro_HDSO_500 = Usuarios_por_Micro_HDSO(:, :, 1);
-% usr_por_micro_HDSO_1000 = Usuarios_por_Micro_HDSO(:, :, 2);
-% usr_por_micro_HDSO_1500 = Usuarios_por_Micro_HDSO(:, :, 3);
-
-% save('HDSO_Results/usr_por_micro_HDSO_500.mat', 'usr_por_micro_HDSO_500');
-% save('HDSO_Results/usr_por_micro_HDSO_1000.mat', 'usr_por_micro_HDSO_1000');
-% save('HDSO_Results/usr_por_micro_HDSO_1500.mat', 'usr_por_micro_HDSO_1500');
+writematrix(users_by_sector,'SA_positions/user_by_sector_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(small_cell_status,'SA_positions/rrhs_status_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
 %-----------------------------------------------------------------------------
-% saida_SA_500 = saida_SA(:, :, 1);
-% saida_SA_1000 = saida_SA(:, :, 2);
-% saida_SA_1500 = saida_SA(:, :, 3);
 
 
-% save('SA_Results/SA_500.mat', 'saida_SA_500');
-% save('SA_Results/SA_1000.mat', 'saida_SA_1000');
-% save('SA_Results/SA_1500.mat', 'saida_SA_1500');
 
-% saida_HDSO_500 = saida_HDSO(:, :, 1);
-% saida_HDSO_1000 = saida_HDSO(:, :, 2);
-% saida_HDSO_1500 = saida_HDSO(:, :, 3);
 
-% save('HDSO_Results/HDSO_500.mat', 'saida_HDSO_500');
-% save('HDSO_Results/HDSO_1000.mat', 'saida_HDSO_1000');
-% save('HDSO_Results/HDSO_1500.mat', 'saida_HDSO_1500');
-
-% save('SA_Results/Resultados_SA.mat', 'saida_SA');
-% save('HDSO_Results/Resultados_HDSO.mat', 'saida_HDSO');
 
 % x=(1:24);
 % y1 =saida_SA(:,9,1);

@@ -21,8 +21,8 @@ for j = 1:24
         Us(a).X = 150 + (X(1,2) - 300) * rand(1);
         Us(a).Y = 150 + (Y(1,2) - 300) * rand(1);
         
-%         Us(a).X = rand(1) * 500;
-%         Us(a).Y = rand(1) * 500;
+%         Us(a).X = rand(1) * X(1,2);
+%         Us(a).Y = rand(1) * Y(1,2);
         Us(a).R_DR = T;
         Us(a).M = j;
         a = a + 1;

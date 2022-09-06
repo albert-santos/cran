@@ -1,4 +1,4 @@
-function [saida, numero_SC, S1] = SA_algorithm (V21, Us1, Small, Macro)
+function [saida, numero_SC, S1, small_cell_status] = SA_algorithm (V21, Us1, Small, Macro)
 %% SA algorithm 
 
 %% Initial parameters of ACO 
@@ -49,7 +49,7 @@ for i=0:TS
      melhor_selecao = sortrows(V21, -3);
 %      menor_valor = A.cost;
      
-     [saida, S1] = SelecionaB(i, Us1, melhor_selecao, Macro, Small);
+     [saida, S1, small_cell_status] = SelecionaB(i, Us1, melhor_selecao, Macro, Small);
      
      if saida(1,2) < (Total_US*0.01) || (i == TS) % Condições de parada do loop. 
          %Nº de usuários ser menor que 0,1% do total de usuários daquele
@@ -58,7 +58,7 @@ for i=0:TS
                                                        
          break;
      end
-     i
+     
 end
 
 
