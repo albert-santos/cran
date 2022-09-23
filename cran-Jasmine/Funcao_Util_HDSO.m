@@ -8,7 +8,7 @@ function [V21] = Funcao_Util_HDSO(Small, V21)
     
     for i=1:T
         Interferencias(i) = Small(i).Int;
-        
+ 
         N_served = Small(i).U;
         N_blocked = Small(i).UB;
         if N_served ~= 0

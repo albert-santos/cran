@@ -4,7 +4,7 @@ function [saida, tempo_execucao, Micros_HDSO, UE] = root_HDSO(Usuarios, SmallCel
 % Parte III --> Criação do Cenário para etapa de otimização
 % -------------------------------------------------------------------------
 
-[U, Small, Macro, TU] = StartScenario(Usuarios, SmallCells, MacroCells); % Usuários, SmallCells e MacroCells
+[U, Small, Macro, ~] = StartScenario(Usuarios, SmallCells, MacroCells); % Usuários, SmallCells e MacroCells
 
 
 b = length(U);
@@ -16,14 +16,14 @@ for j = 1:24
             User(a) = UE(k);
             a = a + 1;
         end
-    end    
+    end
     
     % Conexão Usuário/Small
     [Us1, S1] = ConexaoUs(User, Small); % Usuários e Small
     [M1] = Media(Us1); % M = [DataRate SINR > DR <DR UD]
     [V21] = Media_M(S1, Us1); %S1 - SmallCells com nº(S1.U) e indices(S1.VU) de usuarios conectados
     [ON, OFF(j,:)] = HDSO_algorithm(Macro, S1,Us1,V21);
-    SM(j) = ON; % Quantidade de micros que devem ser ligadas 
+    SM(j) = ON; % Quantidade de micros que devem ser ligadas
     %OFF(j,:) - indica quais micros devem ser desligadas
     fprintf('Implementando FU para a hora #%d!\n', j);
     
@@ -31,36 +31,17 @@ for j = 1:24
     
     
     
-    %[Su(j,:), Sv(j,:)] = MaximoA(V21, SM); 
+    %[Su(j,:), Sv(j,:)] = MaximoA(V21, SM);
     %SM(2X5)-Maximos de SCs conectadas(em determinada hora) por percentuais
-    %                0.2     0.4     0.6     0.8     1 
-    %   | Usuario - 
-    %   | Vazao   -                                   |  
+    %                0.2     0.4     0.6     0.8     1
+    %   | Usuario -
+    %   | Vazao   -                                   |
     
     %Sn(24x4).5
-    %Sn(hora, matriz com caracteristicas das smallcells).percentual 
+    %Sn(hora, matriz com caracteristicas das smallcells).percentual
     clear User;
     tempo_execucao(j) = toc;  % Tempo de execução para cada hora
 end
-
-% 
-%  for j = 1:24
-%     a = 1;
-%         for k = 1:b
-%             if (U(k).M == j)
-%                 User(a) = U(k);
-%                 a = a + 1;
-%             end
-%         end       
-%    
-%       
-%      [saida(j,:)] = Seleciona_RRH(User, OFF(j,:), Macro, Small);
-%    
-%     clear User;
-%     fprintf('Seleção FU para a hora #%d \n', j);
-%     
-%  end
-
 
 
 end

@@ -41,7 +41,7 @@ int = 1;
  
 while int <= max_int 
 
- int   
+%  int   
 for k = 1:n  % Update da velocidade
     for i = 1:m
        V(k,i) = ceil(V(k,i) + c1 * randi([0 1]) * (PBest(k,i) - population(k,i))...

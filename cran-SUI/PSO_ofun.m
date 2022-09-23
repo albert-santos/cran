@@ -15,7 +15,7 @@ function [OF] = PSO_ofun (population, User, number_of_BBUs)
 
 Media = sum(User)/number_of_BBUs;
 
-for i = 1:length(population)
+for i = 1:size(population,1)
     Setor = zeros([1 number_of_BBUs]);
     X = 0;
     for j = 1:size(population,2)

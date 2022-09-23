@@ -18,7 +18,7 @@ A.cost = inf;
 TS = length(Small);
 A.position = V21;
 
-for i=0:TS
+for i=0:2:TS
 %      for t = 1 : maxIteration
 % 
 %         fitness_hist(t) = A.cost;
@@ -63,6 +63,6 @@ end
 
 
    
-
+saida(1,9)
 
 end

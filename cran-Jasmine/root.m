@@ -19,8 +19,7 @@ for j = 1:24
     
     [Us1, ~] = ConexaoUsM(User, Macro);
     % Conexão Usuário/Small
-    [Us1, S1] = ConexaoUs(Us1, Small); % Usuários e Small
-%     [Us1, S1] = ConexaoUs(User, Small); % Usuários e Small
+    [Us1, S1] = ConexaoUs_alt(Us1, Small); % Usuários e Small
     [M1] = Media(Us1); % M = [DataRate SINR > DR <DR UD]
     [V21] = Media_M(S1, Us1); %S1 - SmallCells com nº(S1.U) e indices(S1.VU) de usuarios conectados
     
