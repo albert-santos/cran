@@ -51,7 +51,7 @@ for i=0:2:TS
      
      [saida, S1, small_cell_status] = SelecionaB(i, Us1, melhor_selecao, Macro, Small);
      
-     if saida(1,2) < (Total_US*0.01) || (i == TS) % Condições de parada do loop. 
+     if saida(1,2) < (Total_US*0.001) || (i == TS) % Condições de parada do loop. 
          %Nº de usuários ser menor que 0,1% do total de usuários daquele
          %período ou o Nº de micros atingir 90% do total
          numero_SC = i; 

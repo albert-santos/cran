@@ -29,7 +29,7 @@ end
 % users_positions_X = zeros(1,size(Us,2));
 % users_positions_Y = zeros(1,size(Us,2));
 for i=1:size(Us,2)
-    if Us(i).M == 1
+    if Us(i).M == 7
         users_positions_X(i) = Us(i).X;
         users_positions_Y(i) = Us(i).Y;
     end

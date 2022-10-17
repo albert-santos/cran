@@ -4,8 +4,8 @@ clearvars
 rng(1);
    
 Sim = 1;    % Total de Execuções
-U = 510;     % Total de Usuários
-S = 15;      % Total de Small
+U = 800;     % Total de Usuários
+S = 10;      % Total de Small
 M = 1;       % Total de Macro
 number_of_BBUs = 6; % Número de BBUs
 
