@@ -17,14 +17,14 @@ for i = 1:S
         SC(Cont).X = Px(i);
         SC(Cont).Y = Py(j);
         SC(Cont).RP = 49; % dBm 
-        SC(Cont).Fr = 2.4e9; % 2.4 GHz
+        SC(Cont).Fr = 1.8e9; % 2.4 GHz
         SC(Cont).D = true;
         SC(Cont).PRB = 50;
         SC(Cont).PRB_F = 50;
-        SC(Cont).B = 18e6; % 18 MHz 
+        SC(Cont).B = 10e6; % 18 MHz 
         SC(Cont).C = 0;
         SC(Cont).Cob = 150; % Metros (Euclidiana)
-        SC(Cont).H = 50;
+        SC(Cont).H = 40;
         SC(Cont).UB = 0; % Usuários bloqueados
         SC(Cont).Int = 0; % Interferencia
         

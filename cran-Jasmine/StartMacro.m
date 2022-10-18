@@ -14,14 +14,14 @@ for i = 1:M
         MC(Cont).X = Px(i);
         MC(Cont).Y = Py(j);
         MC(Cont).RP = 49; % dBm
-        MC(Cont).Fr = 3.5e9; % 3.5 GHz
+        MC(Cont).Fr = 1.8e9; % 3.5 GHz
         MC(Cont).D = true;
         MC(Cont).PRB = 100;
         MC(Cont).PRB_F = 100;
         MC(Cont).B = 20e6; % 18MHz
         MC(Cont).C = 0;
         MC(Cont).Cob = 1000; % Metros (Euclidiana)
-        MC(Cont).H = 50;
+        MC(Cont).H = 40;
         
         Cont = Cont + 1;
     end

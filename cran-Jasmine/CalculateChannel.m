@@ -27,7 +27,7 @@ if (D <= S.Cob && S.D)
     Afs = 92.4 + 20*log10(distance_km) + 20*log10(frequency_GHz);
     Abm = 28.33 + 1.27*log10(distance_km) + 6.910*log10(frequency_GHz) + 1.80*(log10(frequency_GHz)^2);
 %     Abm = 20.41 + 9.83*log10(distance_km) + 7.894*log10(frequency_GHz) + 9.56*(log10(frequency_GHz)^2);
-    Gb = log10(Hb/200) * (13.958 + 5.8*(log10(distance_km)^2));
+    Gb = 14 - (log10(Hb/200) * (13.958 + 5.8*(log10(distance_km)^2)));
     Gr = 0.759*Hr - 1.862;
     
 %     Gb2 = log10(Hb/200) * (13.958 + (5.8*2*(log10(distance_km))));
