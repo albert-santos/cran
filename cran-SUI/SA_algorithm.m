@@ -19,35 +19,35 @@ TS = length(Small);
 A.position = V21;
 
 for i=0:2:TS
-%      for t = 1 : maxIteration
-% 
-%         fitness_hist(t) = A.cost;
-% 
-%         B.position=createNeighbour(A.position);
-%         B.cost = funcao_de_selecao (B.position, i, Total_US);
-% 
-%         Delta = B.cost - A.cost;
-% 
-%         if Delta < 0  % uphill move (good move)
-%             A.position = B.position;
-%             A.cost = B.cost;
-%             
-%         else % downhill move (bad move)
-%             P=exp(-Delta/T);
-%             if rand<=P
-%                 A.position = B.position;
-%                 A.cost = B.cost;
-%             end
-%         end
-% 
-%         % Update Temp.
-%         T=alphaa*T;
-% 
-%      end
+     for t = 1 : maxIteration
+
+        fitness_hist(t) = A.cost;
+
+        B.position=createNeighbour(A.position);
+        B.cost = funcao_de_selecao (B.position, i, Total_US);
+
+        Delta = B.cost - A.cost;
+
+        if Delta < 0  % uphill move (good move)
+            A.position = B.position;
+            A.cost = B.cost;
+            
+        else % downhill move (bad move)
+            P=exp(-Delta/T);
+            if rand<=P
+                A.position = B.position;
+                A.cost = B.cost;
+            end
+        end
+
+        % Update Temp.
+        T=alphaa*T;
+
+     end
      
-%      melhor_selecao = A.position;
-     melhor_selecao = sortrows(V21, -3);
-%      menor_valor = A.cost;
+     melhor_selecao = A.position;
+%      melhor_selecao = sortrows(V21, -3);
+     menor_valor = A.cost;
      
      [saida, S1, small_cell_status] = SelecionaB(i, Us1, melhor_selecao, Macro, Small);
      
