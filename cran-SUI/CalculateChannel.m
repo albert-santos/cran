@@ -4,7 +4,25 @@ function [DR, CQI, SINR, I] = CalculateChannel(U, S, Small)
 D = (((U.X - S.X)^2) + ((U.Y - S.Y)^2))^0.5;  %Distancia de Euclides
 
 if (D <= S.Cob && S.D)
-
+    
+    a = 4.0;
+    b = 0.0065;
+    c = 17.1;
+    Hb = S.H;
+    Hr = 1.6;
+    d0 = 100;
+    lambda = 3e8/S.Fr;
+    frequency_Mhz = S.Fr*1e-6;
+    
+    
+ 
+    A = 20 * log10( 4*pi*d0/lambda);
+    Y = a - b*Hb + (c/Hb);
+    Xf = 6*log10(frequency_Mhz/2000);
+    Xh = -10.8*log(Hr/2);
+    
+    L_SUI = A + 10*Y*log10(D/d0) + Xf + Xh;
+    
     WN = 7.4e-13; % Ruído Branco (CORRIGIR)
     I = 0; % Interferencia gerada por outras células
 
@@ -16,7 +34,7 @@ if (D <= S.Cob && S.D)
     Hb = S.H; % Altura da EstaçãoBase,
     E = 16; % Equalizado
 
-    % Parâmetros Cenário SUI
+    % Parâmetros Cenário SUI tipo C
     a = 3.6;
     b = 0.005;
     c = 20;

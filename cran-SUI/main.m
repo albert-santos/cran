@@ -21,11 +21,11 @@ end
 %Micros(horas:total de micros: nº de iterações do código)
 
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
-% [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
+[EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-% writematrix(UserPosition,'SA_positions/UserPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-% writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-% writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition,'SA_positions/UserPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
