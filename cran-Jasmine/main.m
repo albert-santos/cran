@@ -1,7 +1,7 @@
 
 clearvars
 
-rng(1);
+rng(42);
    
 Sim = 1;    % Total de Execuções
 U = 800;     % Total de Usuários
