@@ -46,7 +46,6 @@ for i=0:2:TS
      end
      
      melhor_selecao = A.position;
-%      melhor_selecao = sortrows(V21, -3);
      menor_valor = A.cost;
      
      [saida, S1, small_cell_status] = SelecionaB(i, Us1, melhor_selecao, Macro, Small);

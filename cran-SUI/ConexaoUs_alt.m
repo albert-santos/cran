@@ -22,8 +22,8 @@ function [Us, Small] = ConexaoUs_alt(Us, Small)
         number_of_prbs_requested_by_users(i,2) = PR;
         
     end
-    % Organizando em ordem crescente pela quantidade de PRB requisitados de cada usuário
-    number_of_prbs_requested_by_users =  sortrows(number_of_prbs_requested_by_users, 2);
+%     % Organizando em ordem crescente pela quantidade de PRB requisitados de cada usuário
+%     number_of_prbs_requested_by_users =  sortrows(number_of_prbs_requested_by_users, 2);
     
     
     
