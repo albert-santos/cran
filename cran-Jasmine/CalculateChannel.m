@@ -30,10 +30,9 @@ if (D <= S.Cob && S.D)
     if Hb == 40
         Gb = 14 + (log10(Hb/200) * (13.958 + 5.8*(log10(distance_km)^2)));
     else
-        Gb = 30 + (log10(Hb/200) * (13.958 + 5.8*(log10(distance_km)^2)));
+        Gb = 20 + (log10(Hb/200) * (13.958 + 5.8*(log10(distance_km)^2)));
     end
-        
-        Gr = 0.759*Hr - 1.862;
+    Gr = 0.759*Hr - 1.862;
     
 %     Gb2 = log10(Hb/200) * (13.958 + (5.8*2*(log10(distance_km))));
 %       Gr2 = 0.759*Hr - 1.862; 
@@ -51,7 +50,7 @@ if (D <= S.Cob && S.D)
         if(Small(i).D && Small(i).ID ~= S.ID)
             antennas_distance = 1e-3 * ( (((Small(i).X - U.X)^2) + ((Small(i).Y - U.Y)^2))^0.5);
             Antennas_Afs = 92.4 + 20*log10(antennas_distance) + 20*log10(frequency_GHz);
-            Antennas_Abm = 28.33 + 1.27*log10(distance_km) + 6.910*log10(frequency_GHz) + 1.80*(log10(frequency_GHz) * log10(frequency_GHz));
+            Antennas_Abm = 28.33 + 1.27*log10(antennas_distance) + 6.910*log10(frequency_GHz) + 1.80*(log10(frequency_GHz) * log10(frequency_GHz));
             
             Antenna_Lost = Small(i).RP - (Antennas_Afs + Antennas_Abm - Gb - Gr);
             I = I + (10^(Antenna_Lost/10))/1000;
