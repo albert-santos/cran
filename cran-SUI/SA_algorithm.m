@@ -30,8 +30,7 @@ for i=0:2:TS
 
         if Delta < 0  % uphill move (good move)
             A.position = B.position;
-            A.cost = B.cost;
-            
+            A.cost = B.cost;    
         else % downhill move (bad move)
             P=exp(-Delta/T);
             if rand<=P
