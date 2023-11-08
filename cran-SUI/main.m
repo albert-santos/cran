@@ -23,9 +23,9 @@ end
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-% writematrix(UserPosition,'SA_positions/UserPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-% writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-% writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition,'SA_positions/UserPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -77,7 +77,7 @@ save('SA_Results/Prob_bloqueio_SA.mat', 'Prob_bloqueio_SA');
 usr_por_micro_SA = Usuarios_por_Micro_SA(:, :);
 save('SA_Results/usr_por_micro_SA.mat', 'usr_por_micro_SA');
 saida_SA = saida_SA(:, :);
-save('SA_Results/SA_800.mat', 'saida_SA');
+save('SA_Results/SA.mat', 'saida_SA');
 total_usuarios_conectados = saida_SA(:,1) - saida_SA(:,2);
 usuarios_conectados_nas_micros = saida_SA(:,10);
 SA_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micros; 
@@ -88,9 +88,9 @@ number_of_RRHs = S * S;
 % Balanceamento por meio da alocação das Smalls nas BBUs
 [users_by_sector, mapping_rrh_bbu_sectors] = PSO_ROOT(usr_por_micro_SA, number_of_BBUs, number_of_RRHs);
 
-% writematrix(users_by_sector,'SA_positions/user_by_sector_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-% writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-% writematrix(small_cell_status,'SA_positions/rrhs_status_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(users_by_sector,'SA_positions/user_by_sector_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(small_cell_status,'SA_positions/rrhs_status_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
 %-----------------------------------------------------------------------------
 
 
