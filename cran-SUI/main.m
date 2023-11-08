@@ -23,9 +23,9 @@ end
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-writematrix(UserPosition,'SA_positions/UserPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition,'SA_positions/UserPosition_with_SAModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SAModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SAModel.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -88,9 +88,9 @@ number_of_RRHs = S * S;
 % Balanceamento por meio da alocação das Smalls nas BBUs
 [users_by_sector, mapping_rrh_bbu_sectors] = PSO_ROOT(usr_por_micro_SA, number_of_BBUs, number_of_RRHs);
 
-writematrix(users_by_sector,'SA_positions/user_by_sector_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(small_cell_status,'SA_positions/rrhs_status_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(users_by_sector,'SA_positions/user_by_sector_with_SAModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_SAModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(small_cell_status,'SA_positions/rrhs_status_with_SAModel.xls', 'WriteMode', 'overwritesheet');
 %-----------------------------------------------------------------------------
 
 
