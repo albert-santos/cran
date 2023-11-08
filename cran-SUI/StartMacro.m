@@ -20,7 +20,7 @@ for i = 1:M
         MC(Cont).PRB_F = 50;
         MC(Cont).B = 20e6; % 18MHz
         MC(Cont).C = 0;
-        MC(Cont).Cob = 300; % Metros (Euclidiana)
+        MC(Cont).Cob = 100; % Metros (Euclidiana)
         MC(Cont).H = 40;
         
         Cont = Cont + 1;
