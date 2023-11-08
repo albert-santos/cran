@@ -4,8 +4,8 @@ clearvars
 rng(42);
    
 Sim = 1;    % Total de Execuções
-U = 500;     % Total de Usuários
-S = 10;      % Total de Small
+U = 100;     % Total de Usuários
+S = 10;      % Smalls
 M = 1;       % Total de Macro
 number_of_BBUs = 6; % Número de BBUs
 
@@ -23,9 +23,9 @@ end
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-writematrix(UserPosition,'SA_positions/UserPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+% writematrix(UserPosition,'SA_positions/UserPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+% writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+% writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -55,16 +55,18 @@ for i = 1:Sim %nº de iterações do código
 end
 usr_por_micro(:,:) = round(usr_por_micro/Sim); 
 
+% Média dos resultados considerando o número de repetições da simulação (Sim)
 saida_SA(:,:) = round(saida1/Sim);
 %z = toc;
 
+% Cálcula a quantidade de usuários em cada Small
 for i=1:24
     for j=1:size(Micros, 2)
         Usuarios_por_Micro_SA(i, j) = usr_por_micro(i,j);
     end
 end
 
-
+% Cálculo da probabilidade de bloqueio (Percentual de usuários que não obtiveram a taxa mínima requisitada)
 for i=1:24
     Prob_bloqueio_SA(i) = sum(saida_SA(i,2),1)./sum((saida_SA(i,1)+saida_SA(i,2)),1);
 end
@@ -72,22 +74,23 @@ end
 save('SA_Results/Prob_bloqueio_SA.mat', 'Prob_bloqueio_SA');
 
 
-usr_por_micro_SA_800 = Usuarios_por_Micro_SA(:, :);
-save('SA_Results/usr_por_micro_SA_800.mat', 'usr_por_micro_SA_800');
-saida_SA_800 = saida_SA(:, :);
-save('SA_Results/SA_800.mat', 'saida_SA_800');
-total_usuarios_conectados = saida_SA_800(:,1) - saida_SA_800(:,2);
-usuarios_conectados_nas_micros = saida_SA_800(:,10);
+usr_por_micro_SA = Usuarios_por_Micro_SA(:, :);
+save('SA_Results/usr_por_micro_SA.mat', 'usr_por_micro_SA');
+saida_SA = saida_SA(:, :);
+save('SA_Results/SA_800.mat', 'saida_SA');
+total_usuarios_conectados = saida_SA(:,1) - saida_SA(:,2);
+usuarios_conectados_nas_micros = saida_SA(:,10);
 SA_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micros; 
 
 
-% Balanceamento das BBUs
-number_of_RRHs = S * S;
-[users_by_sector, mapping_rrh_bbu_sectors] = PSO_ROOT(usr_por_micro_SA_800, number_of_BBUs, number_of_RRHs);
+% Número de Smalls. As Smalls estão em grid sendo que o total será S * S
+number_of_RRHs = S * S; 
+% Balanceamento por meio da alocação das Smalls nas BBUs
+[users_by_sector, mapping_rrh_bbu_sectors] = PSO_ROOT(usr_por_micro_SA, number_of_BBUs, number_of_RRHs);
 
-writematrix(users_by_sector,'SA_positions/user_by_sector_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(small_cell_status,'SA_positions/rrhs_status_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+% writematrix(users_by_sector,'SA_positions/user_by_sector_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+% writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
+% writematrix(small_cell_status,'SA_positions/rrhs_status_with_SUIModel.xls', 'WriteMode', 'overwritesheet');
 %-----------------------------------------------------------------------------
 
 
