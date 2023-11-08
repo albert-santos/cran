@@ -100,11 +100,11 @@ end
    
 
 time = toc;
-
-plot (Result, '.');
-xlabel('Iteration');
-ylabel('Fitness function value');
-title('PSO convergence characteristic')
-time1 = time;
+% 
+% plot (Result, '.');
+% xlabel('Iteration');
+% ylabel('Fitness function value');
+% title('PSO convergence characteristic')
+% time1 = time;
 end
 
