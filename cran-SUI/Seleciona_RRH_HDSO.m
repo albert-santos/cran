@@ -1,9 +1,12 @@
-function [Saida, S1] = Seleciona_RRH_HDSO (User, melhor_selecao, Macro,Small)
+function [Saida, S1, small_cell_status] = Seleciona_RRH_HDSO (User, melhor_selecao, Macro,Small)
 
 TS = size(Small,2);
 
+small_cell_status = zeros(1,TS);
+
 for i = 1:TS
     Small(i).D = true;
+    small_cell_status(i) = 1;
 end
 
 
