@@ -8,14 +8,73 @@ U = 100;     % Total de Usuários
 S = 10;      % Smalls
 M = 1;       % Total de Macro
 number_of_BBUs = 6; % Número de BBUs
+optimization_model = 'HDSO'; % SA ou HDSO
+
+if strcmpi(optimization_model,'SA')
+    
+    % Caminho para salvar posições dos usuário
+    UserPositionPath = 'SA_positions/UserPosition_with_SAModel.xls';
+    % Caminho para salvar posições das Base Stations
+    EnbsPositionPath = 'SA_positions/SmallPosition_with_SAModel.xls';
+    % Caminho para salvar a tabela principal 
+    Saida = 'SA_positions/SaidaSA_with_SAModel.xls';
+    
+    % Caminho o percentual de usuários bloqueados em cada cenário
+    ProbBloqueio = 'SA_Results/Prob_bloqueio_SA.mat';
+    % Caminho para salvar a quantidade de usuários por micro (Small Cell)
+    UsuariosPorMicro = 'SA_Results/usr_por_micro.mat';
+    % Caminho para salvar a tabela principal em uma variável do Matlab
+    Results = 'SA_Results/SA.mat';
+    
+    % Caminho para salvar a quantidade de usuários por setor de BBU
+    UsersBySector = 'SA_positions/user_by_sector_with_SAModel.xls';
+    % Caminho para salvar o mapeamento entre RHH e BUU
+    MappingRrhBbuSectors = 'SA_positions/mapping_rrh_bbu_sectors_with_SAModel.xls';
+    % Caminho para o status (ligada ou desligado) de cada RRH
+    RrhStatus = 'SA_positions/rrhs_status_with_SAModel.xls';
+      
+end
+
+if strcmpi(optimization_model,'HDSO')
+    
+    % Caminho para salvar posições dos usuário
+    UserPositionPath = 'HDSO_positions/UserPosition_with_HDSOModel.xls';
+    % Caminho para salvar posições das Base Stations
+    EnbsPositionPath = 'HDSO_positions/SmallPosition_with_HDSOModel.xls';
+    % Caminho para salvar a tabela principal 
+    Saida = 'HDSO_positions/SaidaHDSO_with_HDSOModel.xls';
+    
+    % Caminho o percentual de usuários bloqueados em cada cenário
+    ProbBloqueio = 'HDSO_Results/Prob_bloqueio_HDSO.mat';
+    % Caminho para salvar a quantidade de usuários por micro (Small Cell)
+    UsuariosPorMicro = 'HDSO_Results/usr_por_micro.mat';
+    % Caminho para salvar a tabela principal em uma variável do Matlab
+    Results = 'HDSO_Results/HDSO.mat';
+    
+    % Caminho para salvar a quantidade de usuários por setor de BBU
+    UsersBySector = 'HDSO_positions/user_by_sector_with_HDSOModel.xls';
+    % Caminho para salvar o mapeamento entre RHH e BUU
+    MappingRrhBbuSectors = 'HDSO_positions/mapping_rrh_bbu_sectors_with_HDSOModel.xls';
+    % Caminho para o status (ligada ou desligado) de cada RRH
+    RrhStatus = 'HDSO_positions/rrhs_status_with_HDSOModel.xls'; 
+end
 
 fprintf('Implementando cenário com #%d usuários\n ', U)
 
 %tic
 
 for i = 1:Sim
-    i
-[saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root(U,S,M);
+  
+% Otimização usando SA   
+if strcmpi(optimization_model,'SA')
+    [saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root(U,S,M);
+end
+
+% Otimização usando HDSO
+if strcmpi(optimization_model,'HDSO')
+    [saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root_HDSO(U,S,M);
+end
+
 fprintf('Fim da Iteração #%d\n', i);
 end
 %Micros(horas:total de micros: nº de iterações do código)
@@ -23,9 +82,9 @@ end
 [UserPosition] = Users_position(UE, Sim); % Posicao dos usuários para cada hora
 [EnbsPosition] = Smalls_position(Micros, Sim); % Posição das SmallCells selecionadas para cada hora
 
-writematrix(UserPosition,'SA_positions/UserPosition_with_SAModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(EnbsPosition,'SA_positions/SmallPosition_with_SAModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(saida(:,:,Sim),'SA_positions/SaidaSA_with_SAModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(UserPosition,UserPositionPath, 'WriteMode', 'overwritesheet');
+writematrix(EnbsPosition,EnbsPositionPath, 'WriteMode', 'overwritesheet');
+writematrix(saida(:,:,Sim),Saida, 'WriteMode', 'overwritesheet');
 
  
 T1 = size(saida, 1);
@@ -56,41 +115,42 @@ end
 usr_por_micro(:,:) = round(usr_por_micro/Sim); 
 
 % Média dos resultados considerando o número de repetições da simulação (Sim)
-saida_SA(:,:) = round(saida1/Sim);
+saidaOptimization(:,:) = round(saida1/Sim);
 %z = toc;
 
 % Cálcula a quantidade de usuários em cada Small
 for i=1:24
     for j=1:size(Micros, 2)
-        Usuarios_por_Micro_SA(i, j) = usr_por_micro(i,j);
+        UsuariosPorMicroAuxiliar(i, j) = usr_por_micro(i,j);
     end
 end
 
 % Cálculo da probabilidade de bloqueio (Percentual de usuários que não obtiveram a taxa mínima requisitada)
 for i=1:24
-    Prob_bloqueio_SA(i) = sum(saida_SA(i,2),1)./sum((saida_SA(i,1)+saida_SA(i,2)),1);
+    Prob_bloqueio(i) = sum(saidaOptimization(i,2),1)./sum((saidaOptimization(i,1)+saidaOptimization(i,2)),1);
 end
 
-save('SA_Results/Prob_bloqueio_SA.mat', 'Prob_bloqueio_SA');
+save(ProbBloqueio, 'Prob_bloqueio');
 
 
-usr_por_micro_SA = Usuarios_por_Micro_SA(:, :);
-save('SA_Results/usr_por_micro_SA.mat', 'usr_por_micro_SA');
-saida_SA = saida_SA(:, :);
-save('SA_Results/SA.mat', 'saida_SA');
-total_usuarios_conectados = saida_SA(:,1) - saida_SA(:,2);
-usuarios_conectados_nas_micros = saida_SA(:,10);
+usr_por_micro_final = UsuariosPorMicroAuxiliar(:, :);
+save(UsuariosPorMicro, 'usr_por_micro_final');
+saidaOptimization = saidaOptimization(:, :);
+save(Results, 'saidaOptimization');
+total_usuarios_conectados = saidaOptimization(:,1) - saidaOptimization(:,2);
+usuarios_conectados_nas_micros = saidaOptimization(:,10);
+
 SA_usuarios_por_macro = total_usuarios_conectados - usuarios_conectados_nas_micros; 
 
 
 % Número de Smalls. As Smalls estão em grid sendo que o total será S * S
 number_of_RRHs = S * S; 
 % Balanceamento por meio da alocação das Smalls nas BBUs
-[users_by_sector, mapping_rrh_bbu_sectors] = PSO_ROOT(usr_por_micro_SA, number_of_BBUs, number_of_RRHs);
+[users_by_sector, mapping_rrh_bbu_sectors] = PSO_ROOT(usr_por_micro_final, number_of_BBUs, number_of_RRHs);
 
-writematrix(users_by_sector,'SA_positions/user_by_sector_with_SAModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(mapping_rrh_bbu_sectors,'SA_positions/mapping_rrh_bbu_sectors_with_SAModel.xls', 'WriteMode', 'overwritesheet');
-writematrix(small_cell_status,'SA_positions/rrhs_status_with_SAModel.xls', 'WriteMode', 'overwritesheet');
+writematrix(users_by_sector,UsersBySector, 'WriteMode', 'overwritesheet');
+writematrix(mapping_rrh_bbu_sectors,MappingRrhBbuSectors, 'WriteMode', 'overwritesheet');
+writematrix(small_cell_status,RrhStatus, 'WriteMode', 'overwritesheet');
 %-----------------------------------------------------------------------------
 
 
@@ -98,11 +158,11 @@ writematrix(small_cell_status,'SA_positions/rrhs_status_with_SAModel.xls', 'Writ
 
 
 % x=(1:24);
-% y1 =saida_SA(:,9,1);
+% y1 =saidaOptimization(:,9,1);
 % y2 = saida_HDSO(:,9,1);
-% y3 =saida_SA(:,9,2);
+% y3 =saidaOptimization(:,9,2);
 % y4 = saida_HDSO(:,9,2);
-% y5 =saida_SA(:,9,3);
+% y5 =saidaOptimization(:,9,3);
 % y6 = saida_HDSO(:,9,3);
 % figure1 = figure('Name', 'Número de Micros Selecionadas','Color',[1 1 1]);
 % axes1 = axes('Parent',figure1);
@@ -247,9 +307,9 @@ writematrix(small_cell_status,'SA_positions/rrhs_status_with_SAModel.xls', 'Writ
 % set(legend4,'Location','southeast');
 % 
 % 
-% vazao_SA_500 = sum(saida_SA(:,3,1),1)/24;
-% vazao_SA_1000 = sum(saida_SA(:,3,2),1)/24;
-% vazao_SA_1500 = sum(saida_SA(:,3,3),1)/24;
+% vazao_SA_500 = sum(saidaOptimization(:,3,1),1)/24;
+% vazao_SA_1000 = sum(saidaOptimization(:,3,2),1)/24;
+% vazao_SA_1500 = sum(saidaOptimization(:,3,3),1)/24;
 % 
 % save('SA_Results/Vazao_Media_SA_500.mat', 'vazao_SA_500');
 % save('SA_Results/Vazao_Media_SA_1000.mat', 'vazao_SA_1000');
