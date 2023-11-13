@@ -3,12 +3,14 @@ clearvars
 
 rng(42);
    
+
+optimization_model = 'SA'; % SA ou HDSO
+
 Sim = 1;    % Total de Execuções
 U = 100;     % Total de Usuários
 S = 10;      % Smalls
 M = 1;       % Total de Macro
 number_of_BBUs = 6; % Número de BBUs
-optimization_model = 'HDSO'; % SA ou HDSO
 
 if strcmpi(optimization_model,'SA')
     
@@ -17,7 +19,7 @@ if strcmpi(optimization_model,'SA')
     % Caminho para salvar posições das Base Stations
     EnbsPositionPath = 'SA_positions/SmallPosition_with_SAModel.xls';
     % Caminho para salvar a tabela principal 
-    Saida = 'SA_positions/SaidaSA_with_SAModel.xls';
+    Saida = 'SA_positions/SaidaSA.xls';
     
     % Caminho o percentual de usuários bloqueados em cada cenário
     ProbBloqueio = 'SA_Results/Prob_bloqueio_SA.mat';
@@ -42,7 +44,7 @@ if strcmpi(optimization_model,'HDSO')
     % Caminho para salvar posições das Base Stations
     EnbsPositionPath = 'HDSO_positions/SmallPosition_with_HDSOModel.xls';
     % Caminho para salvar a tabela principal 
-    Saida = 'HDSO_positions/SaidaHDSO_with_HDSOModel.xls';
+    Saida = 'HDSO_positions/SaidaHDSO.xls';
     
     % Caminho o percentual de usuários bloqueados em cada cenário
     ProbBloqueio = 'HDSO_Results/Prob_bloqueio_HDSO.mat';
@@ -67,12 +69,12 @@ for i = 1:Sim
   
 % Otimização usando SA   
 if strcmpi(optimization_model,'SA')
-    [saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root(U,S,M);
+    [saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root(U,S,M,optimization_model);
 end
 
 % Otimização usando HDSO
 if strcmpi(optimization_model,'HDSO')
-    [saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root_HDSO(U,S,M);
+    [saida(:,:,i), tempo_execucao_1(:,i), Micros(:,:,i), UE(i,:), small_cell_status(:,:,i)] = root(U,S,M,optimization_model);
 end
 
 fprintf('Fim da Iteração #%d\n', i);
